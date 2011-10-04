@@ -1,4 +1,4 @@
-function Colortoy(canvas, width, height) {
+function Colortoy(canvas) {
     this.snippets = new TextSnippets();
     this.hexchars = "0123456789ABCDEF";
     this.fonts = ['sans', 'sans-serif', 'monospace'];
@@ -6,8 +6,8 @@ function Colortoy(canvas, width, height) {
 
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
-    this.width = width;
-    this.height = height;
+    this.width = canvas.getAttribute('width');
+    this.height = canvas.getAttribute('height');
     this.margin = Math.floor(this.height*.1);
     this.colors = [];
     this.numColors = 0;
@@ -253,7 +253,7 @@ TextSnippets.prototype = {
 
 
 $('document').ready(function(){
-    var colortoy = new Colortoy($('#theCanvas').get(0), 500, 500);
+    var colortoy = new Colortoy($('#theCanvas').get(0));
 
     $('#shuffle').click(function(event){
         colortoy.shuffle();
