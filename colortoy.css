@@ -36,3 +36,7 @@ body {
 	text-align: right;
 	width: 100px;
 }
+
+#theButtons {
+    clear: both;
+}

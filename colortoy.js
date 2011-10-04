@@ -17,11 +17,16 @@ function Colortoy(canvas, width, height) {
 Colortoy.prototype = {
     shuffle: function() {
         this.populateColors();
+        this.compose();
+    },
+
+    compose: function() {
         this.setBackground();
         this.drawText();
     },
 
     setBackground: function() {
+        this.ptrColors = this.randNum(this.numColors-1, 0);
         this.ctx.fillStyle = this.nextColor();
         this.ctx.fillRect(0, 0, this.width, this.height);
 
@@ -111,8 +116,6 @@ Colortoy.prototype = {
             item.css('background-color', c);
             $('#theColors').append(item);
         }
-
-        this.ptrColors = this.randNum(this.numColors-1, 0);
     },
 
     nextColor: function() {
@@ -125,7 +128,7 @@ Colortoy.prototype = {
     },
 
     randNum: function(max, min) {
-        if (!min) min = 1;
+        if (min == undefined) min = 1;
         var n = max-min;
         var ret = Math.round(Math.random() * n + min);
 
@@ -255,8 +258,13 @@ $('document').ready(function(){
     $('#shuffle').click(function(event){
         colortoy.shuffle();
     });
+
     $('#download').click(function(event){
         colortoy.download();
+    });
+
+    $('#recompose').click(function(event){
+        colortoy.compose();
     });
 
     colortoy.shuffle();
