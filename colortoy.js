@@ -100,7 +100,7 @@ Colortoy.prototype = {
         var min = this.height*.05;
         var max = this.height*1.3;
         return Math.floor(
-            Math.pow(Math.random(), 1.6) * (max-min) + min
+            Math.pow(Math.random(), 1.8) * (max-min) + min
         ); 
     },
 
@@ -136,12 +136,22 @@ Colortoy.prototype = {
     },
 
     genRandColor: function() {
-        var i;
-        var ret = "#";
+        ret = '#';
+        var hex;
 
-        for (i=0; i<6; i++) {
-            var r = Math.floor(Math.random() * 16);
-            ret += this.hexchars.charAt(r);
+        for (var i=0; i<3; i++) {
+            var n = Math.floor(
+                Math.pow(Math.random(), .7)
+                * 256
+            );
+            hex = n.toString(16);
+
+            while (hex.length < 2) {
+                console.log(hex);
+                hex = '0' + hex;
+            }
+
+            ret += hex;
         }
 
         return ret;
