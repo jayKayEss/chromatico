@@ -5,7 +5,16 @@ function Colortoy(canvas) {
     this.hexchars = "0123456789ABCDEF";
     this.fonts = ['sans', 'sans-serif', 'monospace'];
     this.styles = ['', 'bold', 'italic'];
-    this.sizes = [[500, 500], [320, 480], [640, 960], [1440, 900]];
+    this.sizes = [
+        [500, 500], 
+        [320, 480], 
+        [640, 960], 
+        [1024, 768],
+        [1440, 900],
+        [1600, 1000],
+        [1600, 1200],
+        [1920, 1200]
+    ];
 
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
