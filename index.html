@@ -9,12 +9,18 @@
     </head>
     <body>
         <div id="thePage">
-            <canvas id="theCanvas" width="1440" height="900"></canvas>
+            <canvas id="theCanvas" width="500" height="500"></canvas>
             <ul id="theColors"></ul>
             <div id="theButtons">
                 <button id="shuffle">Shuffle!</button>
                 <button id="recompose">Recompose!</button>
                 <button id="download">Download!</button>
+                <select id="sizeMenu">
+                    <option value="0">500x500</option>
+                    <option value="1">320x480 (iPhone)</option>
+                    <option value="2">640x960 (iPhone 4)</option>
+                    <option value="3">1440x900 (laptop)</option>
+                </select>
             </div>
         </div>
     </body>
