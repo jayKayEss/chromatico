@@ -9,6 +9,7 @@ function Colortoy(canvas) {
         [500, 500], 
         [320, 480], 
         [640, 960], 
+        [768, 1024], 
         [1024, 768],
         [1440, 900],
         [1600, 1000],
@@ -38,10 +39,10 @@ Colortoy.prototype = {
 
         if (width > height) {
             displayWidth = 500;
-            displayHeight = Math.floor(height * (displayWidth / width));
+            displayHeight = Math.round(height * (displayWidth / width));
         } else {
             displayHeight = 500;
-            displayWidth = Math.floor(width * (displayHeight / height));
+            displayWidth = Math.round(width * (displayHeight / height));
         }
 
         $(this.canvas).animate({
@@ -50,9 +51,9 @@ Colortoy.prototype = {
         }, {
             step: function(now, fx) {
                 if (fx.prop == 'width') {
-                    self.width = Math.floor(now/2);
+                    self.width = Math.round(now/2);
                 } else {
-                    self.height = Math.floor(now/2);
+                    self.height = Math.round(now/2);
                 }
 
                 self.canvas.setAttribute('width', self.width);
@@ -143,15 +144,15 @@ Colortoy.prototype = {
 
     getX: function() {
         return this.randNum(
-            this.width - this.margin,
-            0 - this.margin
+            this.width - this.margin_x,
+            0 - this.margin_x
         );
     },
 
     getY: function() {
         return this.randNum(
-            this.height - this.margin,
-            0 - this.margin
+            this.height - this.margin_y,
+            0 - this.margin_y
         );
     },
 
@@ -171,8 +172,8 @@ Colortoy.prototype = {
     },
 
     getTextHeight: function() {
-        var min = this.sqrsize*.05;
-        var max = this.sqrsize*1.3;
+        var min = this.height*.05;
+        var max = this.height*1.3;
         return Math.floor(
             Math.pow(this.randDrawing.next(), 1) * (max-min) + min
         ); 
@@ -181,6 +182,8 @@ Colortoy.prototype = {
     setMargins: function() {
         this.sqrsize = Math.floor(Math.sqrt(this.width * this.height));
         this.margin = Math.floor(this.sqrsize*.1);
+        this.margin_x = Math.floor(this.width*.1);
+        this.margin_y = Math.floor(this.height*.1);
     },
 
     populateColors: function() {
@@ -237,13 +240,9 @@ Colortoy.prototype = {
     },
 
     download: function() {
-        var imagedata = this.canvas.toDataURL('image/png');
-        var form = $(
-            '<form method="POST" action="save.php">'+
-            '<input type="hidden" name="imagedata" value="'+imagedata+'">'+
-            '</form>'
-        );
-        form.get(0).submit();
+        var data = this.canvas.toDataURL('image/png');
+        $('#imagedata').val(data);
+        $('#downloadForm').get(0).submit();
     }
 };
 
@@ -390,8 +389,7 @@ $('document').ready(function(){
     });
 
     $('#sizeMenu').change(function(event){
-//        console.log(event);
-        colortoy.changeSize(event.srcElement.value);
+        colortoy.changeSize(event.currentTarget.value);
     });
 
     colortoy.shuffle();

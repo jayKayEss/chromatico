@@ -19,14 +19,18 @@
                     <option value="0">500x500</option>
                     <option value="1">320x480 (iPhone)</option>
                     <option value="2">640x960 (iPhone 4)</option>
-                    <option value="3">1024x768</option>
-                    <option value="4">1440x900</option>
-                    <option value="5">1600x1000</option>
-                    <option value="6">1600x1200</option>
-                    <option value="7">1920x1200</option>
+                    <option value="3">768x1024 (iPad)</option>
+                    <option value="4">1024x768</option>
+                    <option value="5">1440x900</option>
+                    <option value="6">1600x1000</option>
+                    <option value="7">1600x1200</option>
+                    <option value="8">1920x1200</option>
                 </select>
             </div>
         </div>
+        <form id="downloadForm" method="POST" action="save.php">
+            <input id="imagedata" type="hidden" name="imagedata" value="">
+        </form>
     </body>
 </html>
 
