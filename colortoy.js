@@ -24,6 +24,7 @@ function Colortoy(canvas) {
     this.colors = [];
     this.numColors = 0;
     this.ptrColors = 0;
+    this.displayMax = 500;
 }
 
 Colortoy.prototype = {
@@ -45,30 +46,37 @@ Colortoy.prototype = {
 
 //        console.log("WxH "+width+':'+height);
         if (width > height) {
-            displayWidth = 500;
+            displayWidth = Math.min(width, this.displayMax);
             displayHeight = Math.round(height * (displayWidth / width));
 //            console.log("W>H "+displayWidth+':'+displayHeight);
         } else {
-            displayHeight = 500;
+            displayHeight = Math.min(height, this.displayMax);
             displayWidth = Math.round(width * (displayHeight / height));
 //            console.log("W<H "+displayWidth+':'+displayHeight);
         }
 
+        var marginX = Math.round((this.displayMax - displayWidth) / 2);
+        var marginY = Math.round((this.displayMax - displayHeight) / 2);
+
         if (displayWidth != currentDisplayWidth || displayHeight != currentDisplayHeight) {
             $(this.canvas).animate({
+                top: marginY,
+                left: marginX,
                 height: displayHeight,
-                width: displayWidth
-            }, {
+                width: displayWidth,
+           }, {
                 step: function(now, fx) {
                     if (fx.prop == 'width') {
                         self.width = Math.round(now/2);
-                    } else {
+                    } else if (fx.prop == 'height') {
                         self.height = Math.round(now/2);
                     }
 
-                    self.canvas.setAttribute('width', self.width);
-                    self.canvas.setAttribute('height', self.height);
-                    self.redraw();
+                    if (fx.prop == 'width') {
+                        self.canvas.setAttribute('width', self.width);
+                        self.canvas.setAttribute('height', self.height);
+                        self.redraw();
+                    }
                 },
 
                 complete: function(){

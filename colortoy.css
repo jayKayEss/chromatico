@@ -9,15 +9,20 @@ body {
     margin: 0px auto;
 }
 
-#theCanvas {
-    border: 2px solid black;
+#displayArea {
     width: 500px;
     height: 500px;
-/*    position: absolute;*/
-/*    top: 0px;*/
-/*    left: 0px;*/
-/*    width: 100%;*/
-/*    height: 100%;*/
+    background: #eee;
+    border: 2px solid black;
+    float: left;
+}
+
+#theCanvas {
+    width: 500px;
+    height: 500px;
+    position: relative;
+    top: 0px;
+    left: 0px;
 }
 
 #theColors {
