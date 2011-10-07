@@ -24,8 +24,6 @@ function Colortoy(canvas) {
     this.colors = [];
     this.numColors = 0;
     this.ptrColors = 0;
-
-    console.log(this.width+':'+this.height);
 }
 
 Colortoy.prototype = {
@@ -37,6 +35,9 @@ Colortoy.prototype = {
         var displayWidth;
         var displayHeight;
 
+        var currentDisplayWidth = $(this.canvas).width();
+        var currentDisplayHeight = $(this.canvas).height();
+
         if (width > height) {
             displayWidth = 500;
             displayHeight = Math.round(height * (displayWidth / width));
@@ -45,30 +46,39 @@ Colortoy.prototype = {
             displayWidth = Math.round(width * (displayHeight / height));
         }
 
-        $(this.canvas).animate({
-            height: displayHeight,
-            width: displayWidth
-        }, {
-            step: function(now, fx) {
-                if (fx.prop == 'width') {
-                    self.width = Math.round(now/2);
-                } else {
-                    self.height = Math.round(now/2);
+        if (displayWidth != currentDisplayWidth || displayHeight != currentDisplayHeight) {
+            $(this.canvas).animate({
+                height: displayHeight,
+                width: displayWidth
+            }, {
+                step: function(now, fx) {
+                    if (fx.prop == 'width') {
+                        self.width = Math.round(now/2);
+                    } else {
+                        self.height = Math.round(now/2);
+                    }
+
+                    self.canvas.setAttribute('width', self.width);
+                    self.canvas.setAttribute('height', self.height);
+                    self.redraw();
+                },
+
+                complete: function(){
+                    self.width = width;
+                    self.height = height;
+                    self.canvas.setAttribute('width', width);
+                    self.canvas.setAttribute('height', height);
+                    self.redraw();
                 }
-
-                self.canvas.setAttribute('width', self.width);
-                self.canvas.setAttribute('height', self.height);
-                self.redraw();
-            },
-
-            complete: function(){
-                self.width = width;
-                self.height = height;
-                self.canvas.setAttribute('width', width);
-                self.canvas.setAttribute('height', height);
-                self.redraw();
-            }
-        });
+            });
+        } else {
+            this.width = width;
+            this.height = height;
+            this.canvas.setAttribute('width', width);
+            this.canvas.setAttribute('height', height);
+            this.redraw();
+        }
+ 
    },
 
     shuffle: function() {
@@ -392,6 +402,7 @@ $('document').ready(function(){
         colortoy.changeSize(event.currentTarget.value);
     });
 
+    $('#sizeMenu').val(0);
     colortoy.shuffle();
 });
 
