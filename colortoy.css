@@ -15,6 +15,7 @@ body {
     background: #eee;
     border: 2px solid black;
     float: left;
+    margin-bottom: 14px;
 }
 
 #theCanvas {
@@ -46,7 +47,30 @@ body {
     clear: both;
 }
 
+/*#theButtons button,*/
+/*#theButtons select {*/
+/*    border: 2px solid black;*/
+/*    background: #eee;*/
+/*    height: 20px;*/
+/*    font-family: Varela Round;*/
+/*    text-transform: uppercase;*/
+/*    padding: 4px;*/
+/*}*/
+
 #customSize {
     display: inline;
+/*    border: 2px solid black;*/
+/*    height: 20px;*/
+/*    padding: 4px;*/
 }
 
+/*#customSize input {*/
+/*    border: 0px;*/
+/*    padding: 0px;*/
+/*}*/
+
+/*#customSize button {*/
+/*    background: #333;*/
+/*    color: #eee;*/
+/*    border-radius: 14px;*/
+/*}*/

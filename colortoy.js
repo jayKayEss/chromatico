@@ -72,7 +72,7 @@ Colortoy.prototype = {
                         self.height = Math.round(now/2);
                     }
 
-                    if (fx.prop == 'width') {
+                    if (fx.prop == 'left') {
                         self.canvas.setAttribute('width', self.width);
                         self.canvas.setAttribute('height', self.height);
                         self.redraw();
@@ -426,6 +426,7 @@ $('document').ready(function(){
             $('#customY').val(colortoy.height);
             $('#sizeMenu').hide();
             $('#customSize').show();
+            $('#customX').select();
         } else {
             colortoy.changeSizePreset(v);
         }
