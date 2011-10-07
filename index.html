@@ -25,7 +25,14 @@
                     <option value="6">1600x1000</option>
                     <option value="7">1600x1200</option>
                     <option value="8">1920x1200</option>
+                    <option value="custom">Other...</option>
                 </select>
+                <div id="customSize" style="display:none">
+                    <input id="customX" size="4" />
+                    x
+                    <input id="customY" size="4" />
+                    <button id="clearCustomSize">x</button>
+                </div>
             </div>
         </div>
         <form id="downloadForm" method="POST" action="save.php">

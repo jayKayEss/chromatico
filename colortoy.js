@@ -27,23 +27,31 @@ function Colortoy(canvas) {
 }
 
 Colortoy.prototype = {
-    changeSize: function(n) {
-        var self = this;
+
+    changeSizePreset: function(n) {
         var tuple = this.sizes[n];
         var width = tuple[0];
         var height = tuple[1];
+        this.changeSize(width, height); 
+    },
+
+    changeSize: function(width, height) {
+        var self = this;
         var displayWidth;
         var displayHeight;
 
         var currentDisplayWidth = $(this.canvas).width();
         var currentDisplayHeight = $(this.canvas).height();
 
+//        console.log("WxH "+width+':'+height);
         if (width > height) {
             displayWidth = 500;
             displayHeight = Math.round(height * (displayWidth / width));
+//            console.log("W>H "+displayWidth+':'+displayHeight);
         } else {
             displayHeight = 500;
             displayWidth = Math.round(width * (displayHeight / height));
+//            console.log("W<H "+displayWidth+':'+displayHeight);
         }
 
         if (displayWidth != currentDisplayWidth || displayHeight != currentDisplayHeight) {
@@ -79,7 +87,7 @@ Colortoy.prototype = {
             this.redraw();
         }
  
-   },
+    },
 
     shuffle: function() {
         this.randColors = new RandomNumbers(100);
@@ -269,9 +277,9 @@ function TextSnippets() {
 
         "Ж",
 
-        "Jackdaws love my big sphinx of quartz.",
+        "Jackdaws\nlove my\nbig sphinx\nof quartz.",
 
-        "Wafting zephyrs quickly vexed jumbo.",
+        "Wafting\nzephyrs\nquickly\nvexed\nJumbo.",
 
         "!!!!\n"+
         "!!!!\n"+
@@ -294,9 +302,13 @@ function TextSnippets() {
         "     \\ \\ \\ \\ \\ \\ \\ \\ \\ \\\n",
 
         "}}}}} {{{{{",
+
         "1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1,597 2,584 4,181 6,765 10,946 17,711 28,657 46,368 75,025 121,393",
+
         "++++----++++----++++----++++----++++----++++----",
+
         "ETAOIN SHRDLU",
+        "ETAOIN\nSHRDLU",
 
         "#",
 
@@ -399,12 +411,51 @@ $('document').ready(function(){
     });
 
     $('#sizeMenu').change(function(event){
-        colortoy.changeSize(event.currentTarget.value);
+        var v = event.currentTarget.value;
+
+        if (v == 'custom') {
+            $('#customX').val(colortoy.width);
+            $('#customY').val(colortoy.height);
+            $('#sizeMenu').hide();
+            $('#customSize').show();
+        } else {
+            colortoy.changeSizePreset(v);
+        }
+    });
+
+    $('#clearCustomSize').click(function(event){
+        $('#sizeMenu').val(0);
+        $('#customSize').hide();
+        $('#sizeMenu').show();
+        colortoy.changeSizePreset(0);
+    });
+
+    $('#customX, #customY').change(function(event){
+        var elem = $(event.currentTarget);
+        var val = parseInt(elem.val());
+
+        if (isNaN(val)) {
+            $('#customX').val(colortoy.width);
+            $('#customY').val(colortoy.height);
+            return false;
+             
+        } else {
+            if (val < 16) {
+                val = 16;
+            } else if (val > 2000) {
+                val = 2000;
+            }
+        }
+
+        elem.val(val);
+
+        var width = parseInt($('#customX').val());
+        var height = parseInt($('#customY').val());
+        colortoy.changeSize(width, height);
     });
 
     $('#sizeMenu').val(0);
     colortoy.shuffle();
 });
-
 
 

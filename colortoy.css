@@ -40,3 +40,8 @@ body {
 #theButtons {
     clear: both;
 }
+
+#customSize {
+    display: inline;
+}
+
