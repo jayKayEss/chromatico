@@ -1,18 +1,43 @@
 @import url(http://fonts.googleapis.com/css?family=Varela+Round);
 
+html,
 body {
     font-family: Varela Round;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+}
+
+#theContainer {
+    min-height: 100%;
+    padding: 0px;
+    margin: 0px;
+    position: relative;
 }
 
 #theHeader {
-    font-size: 36px;
-    border-bottom: 2px solid black;
-    margin-bottom: 60px;
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    background-color: #aaa;
 }
 
+#theHeader div {
+    margin: 8px;
+    font-size: 36px;
+    color: #666;
+}    
+
 #thePage {
+    position:absolute;
+    top: 50%;
+    height:540px;
+    margin-top: -270px;
+    left: 50%;
     width: 800px;
-    margin: 0px auto;
+    margin-left: -400px;
 }
 
 #displayArea {
@@ -63,30 +88,29 @@ body {
     clear: both;
 }
 
-/*#theButtons button,*/
-/*#theButtons select {*/
-/*    border: 2px solid black;*/
-/*    background: #eee;*/
-/*    height: 20px;*/
-/*    font-family: Varela Round;*/
-/*    text-transform: uppercase;*/
-/*    padding: 4px;*/
-/*}*/
-
 #customSize {
     display: inline;
-/*    border: 2px solid black;*/
-/*    height: 20px;*/
-/*    padding: 4px;*/
 }
 
-/*#customSize input {*/
-/*    border: 0px;*/
-/*    padding: 0px;*/
-/*}*/
+#theFooter {
+    height: 40px;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    background-color: #aaa;
+}
 
-/*#customSize button {*/
-/*    background: #333;*/
-/*    color: #eee;*/
-/*    border-radius: 14px;*/
-/*}*/
+#theFooter div {
+    color: #666;
+    font-size: 12px;
+    text-align: right;
+    margin: 8px;
+    padding-top: 8px;
+}
+
+#theFooter a {
+    text-decoration: none;
+    color: #eee;
+}
