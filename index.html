@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Colortoy 2</title>
+        <title>Chromati.co</title>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="colortoy.css" />
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
@@ -13,7 +13,13 @@
             <div id="displayArea">
                 <canvas id="theCanvas" width="500" height="500"></canvas>
             </div>
-            <ul id="theColors"></ul>
+            <div id="theSidebar">
+                <ul id="theColors"></ul>
+                <div id="colorButtons">
+                    <button id="fewerColors">-</button>
+                    <button id="moreColors">+</button>
+                </div>
+            </div>
             <div id="theButtons">
                 <button id="shuffle">Shuffle!</button>
                 <button id="recompose">Recompose!</button>

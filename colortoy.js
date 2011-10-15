@@ -23,6 +23,10 @@ function Colortoy(canvas) {
     this.colors = undefined;
     this.numColors = 0;
     this.displayMax = 500;
+
+    this.minColors = 2;
+    this.maxColors = 5;
+    this.numColors = 3;
 }
 
 Colortoy.prototype = {
@@ -212,8 +216,12 @@ Colortoy.prototype = {
     },
 
     populateColors: function() {
+        this.colors = new Colors(this.numColors);
+        this.displayColors();
+    },
+
+    displayColors: function() {
         $('#theColors').empty();
-        this.colors = new Colors(3);
 
         for (var i=0; i<this.colors.num; i+=1) {
             var c = this.colors.getHex(i);
@@ -266,12 +274,30 @@ Colors.prototype = {
         this.colors = [];
 
         for (var i=0; i<this.num; i+=1) {
-            var c = this.genRandColor();
-            this.colors[i] = c;
+            this.choose(i);
         }
 
         this.ptr = 0;
         this.bg = 0;
+    },
+
+    choose: function(i) {
+        var c = this.genRandColor();
+        this.colors[i] = c;
+    },
+
+    more: function() {
+        this.num++;
+        var i = this.num-1;
+        if (this.colors[i] == undefined) {
+            this.choose(i);
+        }
+    },
+
+    fewer: function() {
+        if (this.num > 1) {
+            this.num--;
+        }
     },
 
     reset: function() {
@@ -504,6 +530,34 @@ $('document').ready(function(){
         var width = parseInt($('#customX').val());
         var height = parseInt($('#customY').val());
         colortoy.changeSize(width, height);
+    });
+
+    $('#fewerColors').click(function(event){
+        if (colortoy.numColors > colortoy.minColors) {
+            colortoy.numColors--;
+            colortoy.colors.fewer();
+            colortoy.displayColors();
+            colortoy.redraw();
+
+            if (colortoy.numColors <= colortoy.minColors) {
+                $('#fewerColors').attr('disabled', true);
+            }
+            $('#moreColors').attr('disabled', false);
+        }
+    });
+
+    $('#moreColors').click(function(event){
+        if (colortoy.numColors < colortoy.maxColors) {
+            colortoy.numColors++;
+            colortoy.colors.more();
+            colortoy.displayColors();
+            colortoy.redraw();
+
+            if (colortoy.numColors >= colortoy.maxColors) {
+                $('#moreColors').attr('disabled', true);
+            }
+            $('#fewerColors').attr('disabled', false);
+        }
     });
 
     $('#sizeMenu').val(0);

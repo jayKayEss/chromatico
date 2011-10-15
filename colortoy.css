@@ -32,12 +32,18 @@ body {
     left: 0px;
 }
 
+#theSidebar {
+    width: 272px;
+    float: right;
+    margin-left: 20px;
+}
+
 #theColors {
     border: 2px solid black;
-    float: right;
 	padding: 0px;
 	width: 120px;
-	margin: 10px auto;
+/*    margin: 10px auto;*/
+    margin: 0px 0px 10px 0px;
 }
 
 #theColors li {
@@ -47,6 +53,10 @@ body {
 	font-size: 12px;
 	text-align: right;
 	width: 100px;
+}
+
+#colorButtons {
+/*    margin: 10px auto;*/
 }
 
 #theButtons {
