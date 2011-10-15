@@ -46,15 +46,12 @@ Chromatico.prototype = {
         var currentDisplayWidth = $(this.canvas).width();
         var currentDisplayHeight = $(this.canvas).height();
 
-//        console.log("WxH "+width+':'+height);
         if (width > height) {
             displayWidth = Math.min(width, this.displayMax);
             displayHeight = Math.round(height * (displayWidth / width));
-//            console.log("W>H "+displayWidth+':'+displayHeight);
         } else {
             displayHeight = Math.min(height, this.displayMax);
             displayWidth = Math.round(width * (displayHeight / height));
-//            console.log("W<H "+displayWidth+':'+displayHeight);
         }
 
         var marginX = Math.round((this.displayMax - displayWidth) / 2);
@@ -105,7 +102,6 @@ Chromatico.prototype = {
     },
 
     redraw: function() {
-//        console.log('REDRAW: '+this.width+':'+this.height);
         this.colors.reset();
         this.randDrawing.reset();
         this.setMargins();
@@ -115,6 +111,7 @@ Chromatico.prototype = {
 
     compose: function() {
         this.randDrawing = new RandomNumbers(100);
+        this.colors.chooseBg();
         this.redraw();
     },
 
@@ -144,8 +141,6 @@ Chromatico.prototype = {
             var h = this.getTextHeight();
             var x = this.getX();
             var y = this.getY();
-
-//            console.log('TEXT: '+x+','+y+' '+h);
 
             this.ctx.font = this.getFontString(h);
             this.ctx.textBaseline = 'top';
@@ -265,7 +260,6 @@ function Colors(n) {
     }
 
     this.populate();
-    console.log(this.colors);
 }
 
 Colors.prototype = {
@@ -278,7 +272,13 @@ Colors.prototype = {
         }
 
         this.ptr = 0;
-        this.bg = 0;
+        this.chooseBg();
+    },
+
+    chooseBg: function() {
+        this.bg = Math.floor(
+            Math.random() * this.num
+        );
     },
 
     choose: function(i) {
@@ -322,7 +322,6 @@ Colors.prototype = {
             ret += hex;
         }
 
-//        console.log(ret);
         return ret;
     },
 
@@ -432,7 +431,6 @@ TextSnippets.prototype = {
 
     getRandom: function(rand) {
         var i = Math.floor(rand.next() * this.text.length);
-//        console.log(i+' '+this.text[i]);
         return this.text[i];
     }
 
@@ -452,7 +450,6 @@ RandomNumbers.prototype = {
             this.numbers[i] = Math.random();
         }
 
-//        console.log(this.numbers.length);
     },
 
     reset: function() {
@@ -465,7 +462,6 @@ RandomNumbers.prototype = {
             this.ptr++;
             return ret;
         } else {
-            console.log("Out of numbers!");
             return Math.random();
         }
     }
