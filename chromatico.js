@@ -1,4 +1,4 @@
-function Colortoy(canvas) {
+function Chromatico(canvas) {
     this.snippets = new TextSnippets();
     this.randDrawing = null;
     this.hexchars = "0123456789ABCDEF";
@@ -29,7 +29,7 @@ function Colortoy(canvas) {
     this.numColors = 3;
 }
 
-Colortoy.prototype = {
+Chromatico.prototype = {
 
     changeSizePreset: function(n) {
         var tuple = this.sizes[n];
@@ -473,31 +473,31 @@ RandomNumbers.prototype = {
 };
 
 $('document').ready(function(){
-    var colortoy = new Colortoy($('#theCanvas').get(0));
+    var chromatico = new Chromatico($('#theCanvas').get(0));
 
     $('#shuffle').click(function(event){
-        colortoy.shuffle();
+        chromatico.shuffle();
     });
 
     $('#download').click(function(event){
-        colortoy.download();
+        chromatico.download();
     });
 
     $('#recompose').click(function(event){
-        colortoy.compose();
+        chromatico.compose();
     });
 
     $('#sizeMenu').change(function(event){
         var v = event.currentTarget.value;
 
         if (v == 'custom') {
-            $('#customX').val(colortoy.width);
-            $('#customY').val(colortoy.height);
+            $('#customX').val(chromatico.width);
+            $('#customY').val(chromatico.height);
             $('#sizeMenu').hide();
             $('#customSize').show();
             $('#customX').select();
         } else {
-            colortoy.changeSizePreset(v);
+            chromatico.changeSizePreset(v);
         }
     });
 
@@ -505,7 +505,7 @@ $('document').ready(function(){
         $('#sizeMenu').val(0);
         $('#customSize').hide();
         $('#sizeMenu').show();
-        colortoy.changeSizePreset(0);
+        chromatico.changeSizePreset(0);
     });
 
     $('#customX, #customY').change(function(event){
@@ -513,8 +513,8 @@ $('document').ready(function(){
         var val = parseInt(elem.val());
 
         if (isNaN(val)) {
-            $('#customX').val(colortoy.width);
-            $('#customY').val(colortoy.height);
+            $('#customX').val(chromatico.width);
+            $('#customY').val(chromatico.height);
             return false;
              
         } else {
@@ -529,17 +529,17 @@ $('document').ready(function(){
 
         var width = parseInt($('#customX').val());
         var height = parseInt($('#customY').val());
-        colortoy.changeSize(width, height);
+        chromatico.changeSize(width, height);
     });
 
     $('#fewerColors').click(function(event){
-        if (colortoy.numColors > colortoy.minColors) {
-            colortoy.numColors--;
-            colortoy.colors.fewer();
-            colortoy.displayColors();
-            colortoy.redraw();
+        if (chromatico.numColors > chromatico.minColors) {
+            chromatico.numColors--;
+            chromatico.colors.fewer();
+            chromatico.displayColors();
+            chromatico.redraw();
 
-            if (colortoy.numColors <= colortoy.minColors) {
+            if (chromatico.numColors <= chromatico.minColors) {
                 $('#fewerColors').attr('disabled', true);
             }
             $('#moreColors').attr('disabled', false);
@@ -547,13 +547,13 @@ $('document').ready(function(){
     });
 
     $('#moreColors').click(function(event){
-        if (colortoy.numColors < colortoy.maxColors) {
-            colortoy.numColors++;
-            colortoy.colors.more();
-            colortoy.displayColors();
-            colortoy.redraw();
+        if (chromatico.numColors < chromatico.maxColors) {
+            chromatico.numColors++;
+            chromatico.colors.more();
+            chromatico.displayColors();
+            chromatico.redraw();
 
-            if (colortoy.numColors >= colortoy.maxColors) {
+            if (chromatico.numColors >= chromatico.maxColors) {
                 $('#moreColors').attr('disabled', true);
             }
             $('#fewerColors').attr('disabled', false);
@@ -561,7 +561,7 @@ $('document').ready(function(){
     });
 
     $('#sizeMenu').val(0);
-    colortoy.shuffle();
+    chromatico.shuffle();
 });
 
 
