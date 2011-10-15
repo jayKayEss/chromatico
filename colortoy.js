@@ -1,6 +1,5 @@
 function Colortoy(canvas) {
     this.snippets = new TextSnippets();
-    this.randColors = null;
     this.randDrawing = null;
     this.hexchars = "0123456789ABCDEF";
     this.fonts = ['sans', 'sans-serif', 'monospace'];
@@ -21,9 +20,8 @@ function Colortoy(canvas) {
     this.ctx = this.canvas.getContext('2d');
     this.width = canvas.getAttribute('width');
     this.height = canvas.getAttribute('height');
-    this.colors = [];
+    this.colors = undefined;
     this.numColors = 0;
-    this.ptrColors = 0;
     this.displayMax = 500;
 }
 
@@ -98,13 +96,13 @@ Colortoy.prototype = {
     },
 
     shuffle: function() {
-        this.randColors = new RandomNumbers(100);
         this.populateColors();
         this.compose();
     },
 
     redraw: function() {
 //        console.log('REDRAW: '+this.width+':'+this.height);
+        this.colors.reset();
         this.randDrawing.reset();
         this.setMargins();
         this.setBackground();
@@ -117,8 +115,7 @@ Colortoy.prototype = {
     },
 
     setBackground: function() {
-        this.ptrColors = this.randNum(this.numColors-1, 0);
-        this.ctx.fillStyle = this.nextColor();
+        this.ctx.fillStyle = this.colors.next();
         this.ctx.fillRect(0, 0, this.width, this.height);
 
         var numRect = this.randNum(3, 0);
@@ -127,7 +124,7 @@ Colortoy.prototype = {
             var y = this.getY();
             var w = this.getW();
             var h = this.getH();
-            var c = this.nextColor();
+            var c = this.colors.next();
 
             this.ctx.fillStyle = c;
             this.ctx.fillRect(x, y, w, h);
@@ -138,7 +135,7 @@ Colortoy.prototype = {
         var snips = this.randNum(5, 3);
         for (var i=0; i<snips; i++) {
             var text = this.snippets.getRandom(this.randDrawing);
-            var color = this.nextColor();
+            var color = this.colors.next();
             this.ctx.fillStyle = color;
             var h = this.getTextHeight();
             var x = this.getX();
@@ -171,14 +168,16 @@ Colortoy.prototype = {
     getX: function() {
         return this.randNum(
             this.width - this.margin_x,
-            0 - this.margin_x
+            0 - this.margin_x,
+            2
         );
     },
 
     getY: function() {
         return this.randNum(
             this.height - this.margin_y,
-            0 - this.margin_y
+            0 - this.margin_y,
+            2
         );
     },
 
@@ -214,33 +213,69 @@ Colortoy.prototype = {
 
     populateColors: function() {
         $('#theColors').empty();
-        this.colors = [];
+        this.colors = new Colors(3);
 
-        this.numColors = Math.floor(this.randColors.next() * 2 + 3);
-        for (var i=0; i<this.numColors; i+=1) {
-            var c = this.genRandColor();
-            this.colors[i] = c;
+        for (var i=0; i<this.colors.num; i+=1) {
+            var c = this.colors.getHex(i);
             var item = $('<li>'+c+'</li>');
             item.css('background-color', c);
             $('#theColors').append(item);
         }
     },
 
-    nextColor: function() {
-        var ret = this.colors[this.ptrColors];
-        this.ptrColors++;
-        if (this.ptrColors >= this.numColors) {
-            this.ptrColors = 0;
+    randNum: function(max, min, exp) {
+        if (min == undefined) min = 1;
+        var n = max-min;
+        var ret;
+
+        if (exp == undefined) {
+            ret = Math.round(this.randDrawing.next() * n + min);
+        } else {
+            ret = Math.round(Math.pow(this.randDrawing.next(), exp) * n + min);
         }
+
         return ret;
     },
 
-    randNum: function(max, min) {
-        if (min == undefined) min = 1;
-        var n = max-min;
-        var ret = Math.round(this.randDrawing.next() * n + min);
 
-        return ret;
+    download: function() {
+        var data = this.canvas.toDataURL('image/png');
+        $('#imagedata').val(data);
+        $('#downloadForm').get(0).submit();
+    }
+}
+
+function Colors(n) {
+    this.colors = [];
+    this.ptr = 0;
+    this.bg = 0;
+
+    if (n == undefined) {
+        this.num = 3;
+    } else {
+        this.num = n;
+    }
+
+    this.populate();
+    console.log(this.colors);
+}
+
+Colors.prototype = {
+
+    populate: function() {
+        this.colors = [];
+
+        for (var i=0; i<this.num; i+=1) {
+            var c = this.genRandColor();
+            this.colors[i] = c;
+        }
+
+        this.ptr = 0;
+        this.bg = 0;
+    },
+
+    reset: function() {
+        this.ptr = this.bg;
     },
 
     genRandColor: function() {
@@ -249,7 +284,7 @@ Colortoy.prototype = {
 
         for (var i=0; i<3; i++) {
             var n = Math.floor(
-                Math.pow(this.randColors.next(), 1)
+                Math.pow(Math.random(), 1)
                 * 256
             );
             hex = n.toString(16);
@@ -265,12 +300,20 @@ Colortoy.prototype = {
         return ret;
     },
 
-    download: function() {
-        var data = this.canvas.toDataURL('image/png');
-        $('#imagedata').val(data);
-        $('#downloadForm').get(0).submit();
-    }
-};
+    getHex: function(n) {
+        return this.colors[n];
+    },
+
+    next: function() {
+        var ret = this.colors[this.ptr];
+        this.ptr++;
+        if (this.ptr >= this.num) {
+            this.ptr = 0;
+        }
+        return ret;
+    },
+
+}
 
 function TextSnippets() {
     this.text = [
