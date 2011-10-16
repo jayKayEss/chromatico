@@ -78,6 +78,7 @@ body {
 	font-size: 12px;
 	text-align: right;
 	width: 100px;
+    position: relative;
 }
 
 #colorButtons {
@@ -114,3 +115,20 @@ body {
     text-decoration: none;
     color: #eee;
 }
+
+#colorControls {
+    display: none;
+    position: absolute;
+    height: 30px;
+    padding: 2px;
+    text-align: left;
+}
+
+/*button, input, select {*/
+/*    border: 1px solid black;*/
+/*    background: #666;*/
+/*    color: #eee;*/
+/*    height: 27px;*/
+/*    padding: 2px 6px 3px 6px;*/
+/*    margin: 2px;*/
+/*}*/

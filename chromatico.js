@@ -215,14 +215,41 @@ Chromatico.prototype = {
         this.displayColors();
     },
 
-    displayColors: function() {
-        $('#theColors').empty();
+    initializeColors: function() {
+        var list = $('#theColors');
 
-        for (var i=0; i<this.colors.num; i+=1) {
-            var c = this.colors.getHex(i);
-            var item = $('<li>'+c+'</li>');
-            item.css('background-color', c);
-            $('#theColors').append(item);
+        for (var i=0; i<this.maxColors; i+=1) {
+                item = $('<li><span></span></li>');
+                item.attr('data-id', i);
+                item.hide();
+                list.append(item);
+        }
+
+        $('#theColors li').hover(this.showColorTools, this.hideColorTools);
+    },
+
+    displayColors: function() {
+        var list = $('#theColors');
+        var items = list.find('li');
+
+        for (var i=0; i<this.maxColors; i+=1) {
+            var item = items.eq(i);
+
+            if (i < this.numColors) {
+                var c = this.colors.getHex(i);
+
+                if (item.size() == 0) {
+                    item = $('<li><span></span></li>');
+                    list.append(item);
+                }
+
+                item.find('span').html(c);
+                item.css('background-color', c);
+                item.attr('data-id', i);
+                item.show();
+            } else {
+                item.hide();
+            }
         }
     },
 
@@ -245,6 +272,27 @@ Chromatico.prototype = {
         var data = this.canvas.toDataURL('image/png');
         $('#imagedata').val(data);
         $('#downloadForm').get(0).submit();
+    },
+
+    showColorTools: function(event) {
+        var elem = $(event.currentTarget);
+        var pos = elem.offset();
+        var width = elem.width();
+        var menu = $('#colorControls');
+
+        elem.append(menu);
+        menu.css({
+            left: '0px',
+            top: '0px',
+            opacity: '1'
+        }).stop().fadeIn();
+    },
+
+    hideColorTools: function(event) {
+        var menu = $('#colorControls');
+        if (menu.css('display') != 'none') {
+            menu.stop().fadeOut();
+        }
     }
 }
 
@@ -548,8 +596,19 @@ $('document').ready(function(){
         }
     });
 
+    $('#newColor').click(function(event){
+        var elem = $(event.currentTarget);
+        var item = elem.parents('li');
+        var n = item.attr('data-id');
+        chromatico.colors.choose(n);
+        chromatico.displayColors();
+        chromatico.redraw();
+    });
+
     $('#sizeMenu').val(0);
+    chromatico.initializeColors();
     chromatico.shuffle();
+
 });
 
 
