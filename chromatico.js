@@ -111,11 +111,11 @@ Chromatico.prototype = {
 
     compose: function() {
         this.randDrawing = new RandomNumbers(100);
-        this.colors.chooseBg();
         this.redraw();
     },
 
     setBackground: function() {
+        this.colors.ptr = this.randNum(this.numColors-1);
         this.ctx.fillStyle = this.colors.next();
         this.ctx.fillRect(0, 0, this.width, this.height);
 
@@ -251,7 +251,6 @@ Chromatico.prototype = {
 function Colors(n) {
     this.colors = [];
     this.ptr = 0;
-    this.bg = 0;
 
     if (n == undefined) {
         this.num = 3;
@@ -272,13 +271,6 @@ Colors.prototype = {
         }
 
         this.ptr = 0;
-        this.chooseBg();
-    },
-
-    chooseBg: function() {
-        this.bg = Math.floor(
-            Math.random() * this.num
-        );
     },
 
     choose: function(i) {
@@ -301,7 +293,7 @@ Colors.prototype = {
     },
 
     reset: function() {
-        this.ptr = this.bg;
+        this.ptr = 0;
     },
 
     genRandColor: function() {
