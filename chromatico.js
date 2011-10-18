@@ -379,6 +379,10 @@ Colors.prototype = {
         var max_v = Math.min(1, 1+this.scale_v);
         var v = rand.next() * (max_v - min_v) + min_v;
 
+        // default curve is too dark at lower end;
+        // swing everything upward a bit:
+        v = Math.pow(v, .5);
+
         return [h, s, v];
     },
 
@@ -426,10 +430,6 @@ Colors.prototype = {
             r = g = b = Math.floor(v * 255);
             return [r, g, b];
         }
-
-        // default curve is too dark at lower end;
-        // swing everything upward a bit:
-        v = Math.pow(v, .5);
 
         h = h / 60;
         i = Math.floor(h);
