@@ -3,6 +3,7 @@
 html,
 body {
     font-family: Varela Round;
+    font-size: 12px;
     margin: 0px;
     padding: 0px;
     height: 100%;
@@ -81,8 +82,24 @@ body {
     position: relative;
 }
 
+#theColors li span {
+    text-transform: uppercase;
+}
+
+.light {
+    color: #ccc;
+}
+
+.dark {
+    color: #000;
+}
+
 #colorButtons {
-/*    margin: 10px auto;*/
+    margin-bottom: 15px;
+}
+
+#colorSliders {
+    
 }
 
 #theButtons {
@@ -122,6 +139,15 @@ body {
     height: 30px;
     padding: 2px;
     text-align: left;
+}
+
+#expS, #expV {
+/*    height: 10px;*/
+    margin: 2px 0px 15px 0px;
+}
+
+#expS a, #expV a {
+/*    height: 16px;*/
 }
 
 /*button, input, select {*/
