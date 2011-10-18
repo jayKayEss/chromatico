@@ -211,10 +211,9 @@ Chromatico.prototype = {
     },
 
     populateColors: function() {
-        var exp_s = $('#expS').slider('value');
-        var exp_v = $('#expV').slider('value');
-        console.log(exp_s, exp_v);
-        this.colors = new Colors(this.numColors, exp_s, exp_v);
+        var scale_s = $('#expS').slider('value');
+        var scale_v = $('#expV').slider('value');
+        this.colors = new Colors(this.numColors, scale_s, scale_v);
         this.displayColors();
     },
 
@@ -305,21 +304,21 @@ Chromatico.prototype = {
     }
 }
 
-function Colors(n, exp_s, exp_v) {
+function Colors(n, scale_s, scale_v) {
     this.rands = [];
     this.colors = [];
     this.ptr = 0;
     
-    if (exp_s != undefined) {
-        this.exp_s = exp_s;
+    if (scale_s != undefined) {
+        this.scale_s = scale_s;
     } else {
-        this.exp_s = 1;
+        this.scale_s = 1;
     }
     
-    if (exp_v != undefined) {
-        this.exp_v = exp_v;
+    if (scale_v != undefined) {
+        this.scale_v = scale_v;
     } else {
-        this.exp_v = 1;
+        this.scale_v = 1;
     }
 
     if (n == undefined) {
@@ -371,8 +370,14 @@ Colors.prototype = {
         rand.reset();
         
         var h = Math.floor(rand.next() * 360);
-        var s = Math.pow(rand.next(), this.exp_s);
-        var v = Math.pow(rand.next(), this.exp_v);
+        
+        var min_s = Math.max(0, 0+this.scale_s);
+        var max_s = Math.min(1, 1+this.scale_s);
+        var s = rand.next() * (max_s - min_s) + min_s;
+
+        var min_v = Math.max(0, 0+this.scale_v);
+        var max_v = Math.min(1, 1+this.scale_v);
+        var v = rand.next() * (max_v - min_v) + min_v;
 
         return [h, s, v];
     },
@@ -380,7 +385,7 @@ Colors.prototype = {
     getHex: function(i) {
         var hsv = this.genRandColor(i);
         var rgb = this.hsvToRgb(hsv);
-
+        
         return '#' +
             this.toHex(rgb[0]) +
             this.toHex(rgb[1]) +
@@ -418,7 +423,7 @@ Colors.prototype = {
         var i, f, p, q, t, r, g, b;
 
         if( s == 0 ) {
-            r = g = b = v;
+            r = g = b = Math.floor(v * 255);
             return [r, g, b];
         }
 
@@ -682,29 +687,37 @@ $('document').ready(function(){
     });
 
     $('#expS').slider({
-        min: .1,
-        max: 2,
+        min: -1,
+        max: 1,
         step: .05,
-        value: 1,
+        value: 0,
         orientation: 'horizontal',
         change: function(event, ui) {
-            chromatico.colors.exp_s = ui.value;
+            chromatico.colors.scale_s = ui.value;
+            chromatico.redraw();
+            chromatico.displayColors();
+        }
+    });
+    
+    $('#labelS').click(function(event) {
+        $('#expS').slider('value', 0);
+    });
+
+    $('#expV').slider({
+        min: -1,
+        max: 1,
+        step: .05,
+        value: 0,
+        orientation: 'horizontal',
+        change: function(event, ui) {
+            chromatico.colors.scale_v = ui.value;
             chromatico.redraw();
             chromatico.displayColors();
         }
     });
 
-    $('#expV').slider({
-        min: .1,
-        max: 2,
-        step: .05,
-        value: 1,
-        orientation: 'horizontal',
-        change: function(event, ui) {
-            chromatico.colors.exp_v = ui.value;
-            chromatico.redraw();
-            chromatico.displayColors();
-        }
+    $('#labelV').click(function(event) {
+        $('#expV').slider('value', 0);
     });
 
     $('#sizeMenu').val(0);
