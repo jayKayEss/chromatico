@@ -221,7 +221,7 @@ Chromatico.prototype = {
         var list = $('#theColors');
 
         for (var i=0; i<this.maxColors; i+=1) {
-                item = $('<li><span></span></li>');
+                item = $('<li><span class="color"></span></li>');
                 item.attr('data-id', i);
                 item.hide();
                 list.append(item);
@@ -251,7 +251,7 @@ Chromatico.prototype = {
                     labelClass = 'dark';
                 }
                 
-                item.find('span').html(c).attr('class', labelClass);
+                item.find('span.color').html(c).attr('class', 'color '+labelClass);
                 item.css('background-color', c);
                 item.attr('data-id', i);
                 item.show();
@@ -724,7 +724,7 @@ $('document').ready(function(){
     chromatico.initializeColors();
     chromatico.shuffle();
     
-
+    $('button').button();
 });
 
 

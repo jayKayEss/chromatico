@@ -146,9 +146,9 @@ body {
     margin: 2px 0px 15px 0px;
 }
 
-#expS a, #expV a {
+/*#expS a, #expV a {*/
 /*    height: 16px;*/
-}
+/*}*/
 
 /*button, input, select {*/
 /*    border: 1px solid black;*/
@@ -158,3 +158,21 @@ body {
 /*    padding: 2px 6px 3px 6px;*/
 /*    margin: 2px;*/
 /*}*/
+
+#colorSliders div.ui-slider {
+    border: 0px;
+    border-top: 1px solid #000;
+    border-radius: 0px;
+}
+
+#colorSliders a.ui-slider-handle {
+    width: 0px;
+    height: 0px;
+    background-color: transparent;
+    background-image: none;
+    border-width: 3px 6px 11px 6px;
+    border-radius: 0px;
+    border-color: transparent transparent #000 transparent;
+    border-style: dotted;
+    margin-left: -6px;
+}
