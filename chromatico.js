@@ -724,7 +724,6 @@ $('document').ready(function(){
     chromatico.initializeColors();
     chromatico.shuffle();
     
-    $('button').button();
 });
 
 
