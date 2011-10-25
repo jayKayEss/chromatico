@@ -1,9 +1,11 @@
-function Chromatico(canvas) {
+function Chromatico(elem) {
     this.snippets = new TextSnippets();
+    this.colors = undefined;
     this.randDrawing = null;
     this.hexchars = "0123456789ABCDEF";
     this.fonts = ['sans', 'sans-serif', 'monospace'];
     this.styles = ['', 'bold', 'italic'];
+    
     this.sizes = [
         [500, 500], 
         [320, 480], 
@@ -16,13 +18,11 @@ function Chromatico(canvas) {
         [1920, 1200]
     ];
 
-    this.canvas = canvas;
-    this.ctx = this.canvas.getContext('2d');
-    this.width = canvas.getAttribute('width');
-    this.height = canvas.getAttribute('height');
-    this.colors = undefined;
+    this.elem = elem;
+    this.canvas = elem.find('canvas');
+    this.ctx = this.canvas.get(0).getContext('2d');
+
     this.numColors = 0;
-    this.displayMax = 500;
 
     this.minColors = 2;
     this.maxColors = 5;
@@ -30,6 +30,40 @@ function Chromatico(canvas) {
 }
 
 Chromatico.prototype = {
+
+    initialize: function(repeat) {
+        this.displayMaxX = this.elem.width();
+        this.displayMaxY = this.elem.height();
+        
+        var screenWidth = window.screen.width;
+        var screenHeight = window.screen.height;
+        
+        // if (!repeat) {
+            var preset = 0;
+
+            for (var i in this.sizes) {
+                if (this.sizes[i][0] == screenWidth && this.sizes[i][1] == screenHeight) {
+                    preset = i;
+                }
+            }
+
+            this.width = this.sizes[preset][0];
+            this.height = this.sizes[preset][1];
+
+            this.canvas.attr({width: 1, height: 1});
+            this.canvas.css({
+                width: 1, height: 1,
+                left: Math.floor(this.elem.width()/2),
+                top: Math.floor(this.elem.height()/2)
+            });
+
+            $('#sizeMenu').val(preset);
+            this.changeSizePreset(preset);
+        // } else {
+        //     console.log('IN ',this.width,this.height);
+        //     this.changeSize(this.width, this.height);
+        // }
+    },
 
     changeSizePreset: function(n) {
         var tuple = this.sizes[n];
@@ -40,25 +74,27 @@ Chromatico.prototype = {
 
     changeSize: function(width, height) {
         var self = this;
-        var displayWidth;
-        var displayHeight;
 
-        var currentDisplayWidth = $(this.canvas).width();
-        var currentDisplayHeight = $(this.canvas).height();
+        var currentDisplayWidth = this.canvas.width();
+        var currentDisplayHeight = this.canvas.height();
 
-        if (width > height) {
-            displayWidth = Math.min(width, this.displayMax);
-            displayHeight = Math.round(height * (displayWidth / width));
+        var displayWidth = Math.min(width, this.displayMaxX);
+        var factorX = displayWidth / width;
+        
+        var displayHeight = Math.min(height, this.displayMaxY);
+        var factorY = displayHeight / height;
+
+        if (factorX < factorY) {
+            displayHeight = Math.round(height * factorX);
         } else {
-            displayHeight = Math.min(height, this.displayMax);
-            displayWidth = Math.round(width * (displayHeight / height));
+            displayWidth = Math.round(width * factorY);
         }
 
-        var marginX = Math.round((this.displayMax - displayWidth) / 2);
-        var marginY = Math.round((this.displayMax - displayHeight) / 2);
+        var marginX = Math.round((this.displayMaxX - displayWidth) / 2);
+        var marginY = Math.round((this.displayMaxY - displayHeight) / 2);
 
         if (displayWidth != currentDisplayWidth || displayHeight != currentDisplayHeight) {
-            $(this.canvas).animate({
+            this.canvas.stop().animate({
                 top: marginY,
                 left: marginX,
                 height: displayHeight,
@@ -72,8 +108,7 @@ Chromatico.prototype = {
                     }
 
                     if (fx.prop == 'left') {
-                        self.canvas.setAttribute('width', self.width);
-                        self.canvas.setAttribute('height', self.height);
+                        self.canvas.attr({width: self.width, height: self.height});
                         self.redraw();
                     }
                 },
@@ -81,16 +116,14 @@ Chromatico.prototype = {
                 complete: function(){
                     self.width = width;
                     self.height = height;
-                    self.canvas.setAttribute('width', width);
-                    self.canvas.setAttribute('height', height);
+                    self.canvas.attr({width: self.width, height: self.height});
                     self.redraw();
                 }
             });
         } else {
             this.width = width;
             this.height = height;
-            this.canvas.setAttribute('width', width);
-            this.canvas.setAttribute('height', height);
+            this.canvas.attr({width: width, height: height});
             this.redraw();
         }
  
@@ -277,7 +310,7 @@ Chromatico.prototype = {
 
 
     download: function() {
-        var data = this.canvas.toDataURL('image/png');
+        var data = this.canvas.get(0).toDataURL('image/png');
         $('#imagedata').val(data);
         $('#downloadForm').get(0).submit();
     },
@@ -590,7 +623,11 @@ RandomNumbers.prototype = {
 };
 
 $('document').ready(function(){
-    var chromatico = new Chromatico($('#theCanvas').get(0));
+    var chromatico = new Chromatico($('#displayArea'));
+
+    $(window).resize(function(event){
+        chromatico.initialize(true);
+    })
 
     $('#shuffle').click(function(event){
         chromatico.shuffle();
@@ -720,10 +757,10 @@ $('document').ready(function(){
         $('#expV').slider('value', 0);
     });
 
-    $('#sizeMenu').val(0);
     chromatico.initializeColors();
+    chromatico.populateColors();
     chromatico.shuffle();
-    
+    chromatico.initialize(false);
 });
 
 

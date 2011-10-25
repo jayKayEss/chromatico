@@ -10,26 +10,19 @@ body {
 }
 
 #theContainer {
-    min-height: 100%;
+    height: 100%;
+    width: 100%;
     padding: 0px;
     margin: 0px;
     position: relative;
 }
 
 #theHeader {
-    margin: 0px;
-    padding: 0px;
-    position: absolute;
-    top: 0px;
-    width: 100%;
-    background-color: #aaa;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
 }
-
-#theHeader div {
-    margin: 8px;
-    font-size: 36px;
-    color: #666;
-}    
 
 #thePage {
     position:absolute;
@@ -42,30 +35,28 @@ body {
 }
 
 #displayArea {
-    width: 500px;
-    height: 500px;
-    background: #eee;
-    border: 2px solid black;
-    float: left;
-    margin-bottom: 14px;
+    width: 100%;
+    height: 100%;
+    background: #ccc;
 }
 
 #theCanvas {
-    width: 500px;
-    height: 500px;
     position: relative;
-    top: 0px;
-    left: 0px;
 }
 
 #theSidebar {
-    width: 272px;
-    float: right;
-    margin-left: 20px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+/*    background-color: #333;*/
+    background-color: rgba(51, 51, 51, .8);
+    padding: 20px;
+    border-bottom-left-radius: 8px;
+    color: #ccc;
 }
 
 #theColors {
-    border: 2px solid black;
+/*    border: 2px solid #ccc;*/
 	padding: 0px;
 	width: 120px;
 /*    margin: 10px auto;*/
@@ -103,7 +94,12 @@ body {
 }
 
 #theButtons {
-    clear: both;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    padding: 20px;
+    background-color: #333;
+    border-top-right-radius: 8px;
 }
 
 #customSize {
@@ -111,17 +107,15 @@ body {
 }
 
 #theFooter {
-    height: 40px;
     position: absolute;
+    right: 0px;
     bottom: 0px;
-    width: 100%;
-    margin: 0px;
-    padding: 0px;
-    background-color: #aaa;
+    background-color: #333;
+    border-top-left-radius: 8px;
 }
 
 #theFooter div {
-    color: #666;
+    color: #ccc;
     font-size: 12px;
     text-align: right;
     margin: 8px;
@@ -130,7 +124,7 @@ body {
 
 #theFooter a {
     text-decoration: none;
-    color: #eee;
+    color: #fff;
 }
 
 #colorControls {
@@ -161,8 +155,9 @@ body {
 
 #colorSliders div.ui-slider {
     border: 0px;
-    border-top: 1px solid #000;
+    border-top: 1px solid #ccc;
     border-radius: 0px;
+    background: none;
 }
 
 #colorSliders a.ui-slider-handle {
@@ -172,7 +167,7 @@ body {
     background-image: none;
     border-width: 3px 6px 11px 6px;
     border-radius: 0px;
-    border-color: transparent transparent #000 transparent;
+    border-color: transparent transparent #ccc transparent;
     border-style: dotted;
     margin-left: -6px;
 }

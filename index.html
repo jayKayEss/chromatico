@@ -10,55 +10,52 @@
         <script type="text/javascript" src="chromatico.js"></script>
     </head>
     <body>
-        <div id="theContainer">
-            <div id="theHeader"><div>CHROMATI.CO</div></div>
-            <div id="thePage">
-                <div id="displayArea">
-                    <canvas id="theCanvas" width="500" height="500"></canvas>
-                </div>
-                <div id="theSidebar">
-                    <ul id="theColors"></ul>
-                    <div id="colorButtons">
-                        <button id="fewerColors">-</button>
-                        <button id="moreColors">+</button>
-                    </div>
-                    <div id="colorSliders">
-                        <label id="labelS">Saturation</label><br />
-                        <div id="expS"></div>
-                        <label id="labelV">Brightness</label><br />
-                        <div id="expV"></div>
-                    </div>
-                </div>
-                <div id="theButtons">
-                    <button id="shuffle">Shuffle!</button>
-                    <button id="recompose">Recompose!</button>
-                    <button id="download">Download!</button>
-                    <select id="sizeMenu">
-                        <option value="0">500x500</option>
-                        <option value="1">320x480 (iPhone)</option>
-                        <option value="2">640x960 (iPhone 4)</option>
-                        <option value="3">768x1024 (iPad)</option>
-                        <option value="4">1024x768</option>
-                        <option value="5">1440x900</option>
-                        <option value="6">1600x1000</option>
-                        <option value="7">1600x1200</option>
-                        <option value="8">1920x1200</option>
-                        <option value="custom">Other...</option>
-                    </select>
-                    <div id="customSize" style="display:none">
-                        <input id="customX" size="4" />
-                        x
-                        <input id="customY" size="4" />
-                        <button id="clearCustomSize">x</button>
-                    </div>
-                </div>
-            <form id="downloadForm" method="POST" action="save.php">
-                <input id="imagedata" type="hidden" name="imagedata" value="">
-            </form>
+        <div id="displayArea">
+            <canvas id="theCanvas"></canvas>
+        </div>
+        <div id="theSidebar">
+            <div id="theHeader">CHROMATI.CO</div>
+            <ul id="theColors"></ul>
+            <div id="colorButtons">
+                <button id="fewerColors">-</button>
+                <button id="moreColors">+</button>
             </div>
-            <div id="theFooter">
-                <div>Made by <a href="http://www.jaykayess.com/">Justin Kerr Sheckler</a> 2011</div>
+            <div id="colorSliders">
+                <label id="labelS">Saturation</label><br />
+                <div id="expS"></div>
+                <label id="labelV">Brightness</label><br />
+                <div id="expV"></div>
             </div>
+        </div>
+        <div id="theButtons">
+            <button id="shuffle">Shuffle!</button>
+            <button id="recompose">Recompose!</button>
+            <button id="download">Download!</button>
+            <select id="sizeMenu">
+                <option value="0">500x500</option>
+                <option value="1">320x480 (iPhone)</option>
+                <option value="2">640x960 (iPhone 4)</option>
+                <option value="3">768x1024 (iPad)</option>
+                <option value="4">1024x768</option>
+                <option value="5">1440x900</option>
+                <option value="6">1600x1000</option>
+                <option value="7">1600x1200</option>
+                <option value="8">1920x1200</option>
+                <option value="custom">Other...</option>
+            </select>
+            <div id="customSize" style="display:none">
+                <input id="customX" size="4" />
+                x
+                <input id="customY" size="4" />
+                <button id="clearCustomSize">x</button>
+            </div>
+        </div>
+        <form id="downloadForm" method="POST" action="save.php">
+            <input id="imagedata" type="hidden" name="imagedata" value="">
+        </form>
+        </div>
+        <div id="theFooter">
+            <div>Made by <a href="http://www.jaykayess.com/">Justin Kerr Sheckler</a> 2011</div>
         </div>
         <div id="colorControls">
             <button id="newColor">New</button>
