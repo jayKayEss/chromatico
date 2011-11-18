@@ -38,7 +38,7 @@ Chromatico.prototype = {
         var screenWidth = window.screen.width;
         var screenHeight = window.screen.height;
         
-        // if (!repeat) {
+        if (!repeat) {
             var preset = 0;
 
             for (var i in this.sizes) {
@@ -59,10 +59,9 @@ Chromatico.prototype = {
 
             $('#sizeMenu').val(preset);
             this.changeSizePreset(preset);
-        // } else {
-        //     console.log('IN ',this.width,this.height);
-        //     this.changeSize(this.width, this.height);
-        // }
+        } else {
+            this.changeSize(this.lastWidth, this.lastHeight);
+        }
     },
 
     changeSizePreset: function(n) {
@@ -116,6 +115,10 @@ Chromatico.prototype = {
                 complete: function(){
                     self.width = width;
                     self.height = height;
+                    
+                    self.lastWidth = width;
+                    self.lastHeight = height;
+                    
                     self.canvas.attr({width: self.width, height: self.height});
                     self.redraw();
                 }
