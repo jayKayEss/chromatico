@@ -162,11 +162,33 @@ Chromatico.prototype = {
 
         var numRect = this.randNum(3, 0);
         for (var i=0; i<numRect; i++) {
-            var x = this.getX();
-            var y = this.getY();
-            var w = this.getW();
-            var h = this.getH();
+            var x, y, w, h;
             var c = this.colors.next();
+            
+            var mode = this.randNum(1, 0);
+            
+            if (mode == 1) {
+                // horizontal stripe
+                y = this.randNum(Math.floor(this.height*.9), this.height*.1);
+                if (this.randNum(1, 0)) {
+                    h = this.randNum(Math.floor((this.height-y)*.9), this.height*.1);
+                } else {
+                    h = this.height;
+                }
+                x = 0;
+                w = this.width;
+                
+            } else {
+                // vertical stripe
+                x = this.randNum(Math.floor(this.width*.9), this.width*.1);
+                if (this.randNum(1, 0)) {
+                    w = this.randNum(Math.floor((this.width-x)*.9), this.width*.1);
+                } else {
+                    w = this.width;
+                }
+                y = 0;
+                h = this.height;
+            }
 
             this.ctx.fillStyle = c;
             this.ctx.fillRect(x, y, w, h);
