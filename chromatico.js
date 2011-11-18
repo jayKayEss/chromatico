@@ -27,6 +27,11 @@ function Chromatico(elem) {
     this.minColors = 2;
     this.maxColors = 5;
     this.numColors = 3;
+    
+    this.width = 1;
+    this.height = 1;
+    this.lastWidth = 1;
+    this.lastHeight = 1;
 }
 
 Chromatico.prototype = {
