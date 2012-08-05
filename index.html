@@ -3,11 +3,11 @@
     <head>
         <title>Chromati.co</title>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="chromatico.css" />
+        <link rel="stylesheet" href="css/chromatico.css" />
         <link type="text/css" href="css/chromatico/jquery-ui-1.8.16.custom.css" rel="Stylesheet" />
         <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
-        <script type="text/javascript" src="chromatico.js"></script>
+        <script type="text/javascript" src="js/chromatico.js"></script>
     </head>
     <body>
         <div id="displayArea">
@@ -15,48 +15,51 @@
         </div>
         <div id="theSidebar">
             <div id="theHeader"></div>
-            <ul id="theColors"></ul>
-            <div id="colorButtons">
-                <button id="fewerColors"></button>
-                <button id="moreColors"></button>
+            <div id="colorsAndSliders">
+                <ul id="theColors"></ul>
+                <div id="colorButtons">
+                    <button id="fewerColors"></button>
+                    <button id="moreColors"></button>
+                </div>
+                <div id="colorSliders">
+                    <label id="labelS">Saturation</label><br />
+                    <div id="expS"></div>
+                    <label id="labelV">Brightness</label><br />
+                    <div id="expV"></div>
+                </div>
             </div>
-            <div id="colorSliders">
-                <label id="labelS">Saturation</label><br />
-                <div id="expS"></div>
-                <label id="labelV">Brightness</label><br />
-                <div id="expV"></div>
+            <div id="sizeForm">
+                <select id="sizeMenu">
+                    <option value="0">500x500</option>
+                    <option value="1">320x480 (iPhone)</option>
+                    <option value="2">640x960 (iPhone 4)</option>
+                    <option value="3">768x1024 (iPad)</option>
+                    <option value="4">1024x768</option>
+                    <option value="5">1440x900</option>
+                    <option value="6">1600x1000</option>
+                    <option value="7">1600x1200</option>
+                    <option value="8">1920x1200</option>
+                    <option value="custom">Other...</option>
+                </select>
+                <div id="customSize" style="display:none">
+                    <input id="customX" size="4" />
+                    <span class="theX">X</span>
+                    <input id="customY" size="4" />
+                    <button id="clearCustomSize"></button>
+                </div>
+            </div>
+            <div id="theButtons">
+                <button id="shuffle"></button>
+                <button id="recompose"></button>
+                <button id="download"></button>
             </div>
         </div>
-        <div id="theButtons">
-            <button id="shuffle"></button>
-            <button id="recompose"></button>
-            <button id="download"></button>
-            <select id="sizeMenu">
-                <option value="0">500x500</option>
-                <option value="1">320x480 (iPhone)</option>
-                <option value="2">640x960 (iPhone 4)</option>
-                <option value="3">768x1024 (iPad)</option>
-                <option value="4">1024x768</option>
-                <option value="5">1440x900</option>
-                <option value="6">1600x1000</option>
-                <option value="7">1600x1200</option>
-                <option value="8">1920x1200</option>
-                <option value="custom">Other...</option>
-            </select>
-            <div id="customSize" style="display:none">
-                <input id="customX" size="4" />
-                x
-                <input id="customY" size="4" />
-                <button id="clearCustomSize">x</button>
-            </div>
+        <div id="theFooter">
+            <div><a href="http://www.jaykayess.com/">Justin Kerr Sheckler</a> 2012</div>
         </div>
         <form id="downloadForm" method="POST" action="save.php">
             <input id="imagedata" type="hidden" name="imagedata" value="">
         </form>
-        </div>
-        <div id="theFooter">
-            <div>Made by <a href="http://www.jaykayess.com/">Justin Kerr Sheckler</a> 2011</div>
-        </div>
         <div id="colorControls">
             <button id="newColor"></button>
         </div>
