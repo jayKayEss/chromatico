@@ -255,6 +255,10 @@ button#download:active {
     background-image: url(../img/sprites.png);
 }
 
+#colorButtons button:disabled {
+    opacity: .5;
+}
+
 button#fewerColors {
     background-position: -192px -32px;
 }
