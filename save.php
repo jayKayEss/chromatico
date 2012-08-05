@@ -5,7 +5,7 @@ $imagedata = substr($imagedata, strpos($imagedata, ',')+1);
 $imagedata = base64_decode($imagedata);
 
 $image = imagecreatefromstring($imagedata);
-$watermark = imagecreatefrompng('watermark.png');
+$watermark = imagecreatefrompng('img/watermark.png');
 
 imagecopy(
     $image, $watermark,
@@ -14,8 +14,10 @@ imagecopy(
     imagesx($watermark), imagesy($watermark)
 );
 
+$filename = "chromatico_" . time() . ".png";
+
 header('Content-Type: image/png;base64');
-header('Content-Disposition: attachment; filename=chromatico.png');
+header('Content-Disposition: attachment; filename=' . $filename);
 
 imagepng($image);
 imagedestroy($image);

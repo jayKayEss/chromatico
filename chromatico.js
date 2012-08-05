@@ -196,7 +196,7 @@ Chromatico.prototype = {
     },
 
     drawText: function() {
-        var snips = this.randNum(5, 3);
+        var snips = this.randNum(8, 3);
         for (var i=0; i<snips; i++) {
             var text = this.snippets.getRandom(this.randDrawing);
             var color = this.colors.next();
@@ -260,9 +260,9 @@ Chromatico.prototype = {
 
     getTextHeight: function() {
         var min = this.height*.05;
-        var max = this.height*1.3;
+        var max = this.height*2;
         return Math.floor(
-            Math.pow(this.randDrawing.next(), 1) * (max-min) + min
+            Math.pow(this.randDrawing.next(), 2) * (max-min) + min
         ); 
     },
 
