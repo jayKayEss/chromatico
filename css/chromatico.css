@@ -209,12 +209,11 @@ button#clearCustomSize:hover {
 }
 
 #theButtons button {
-    width: 62px;
-    height: 62px;
+    width: 64px;
+    height: 64px;
     background-image: url(../img/sprites.png);
     background-color: transparent;
     border: 0px;
-    border-radius: 2px;
     margin: 0px;
     padding: 0px;
 }
@@ -233,7 +232,6 @@ button#shuffle:active {
 
 button#recompose {
     background-position: -64px -32px;
-    margin: 0px 3px 0px 3px;
 }
 
 button#recompose:hover {
