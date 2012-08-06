@@ -145,33 +145,35 @@ Chromatico.prototype = {
     redraw: function() {
         this.colors.reset();
         this.randDrawing.reset();
+        this.randBackground.reset();
         this.setMargins();
         this.setBackground();
         this.drawText();
     },
 
     compose: function() {
+        this.randBackground = new RandomNumbers(100);
         this.randDrawing = new RandomNumbers(100);
         this.redraw();
     },
 
     setBackground: function() {
-        this.colors.ptr = this.randNum(this.numColors-1);
+        this.colors.ptr = this.randBackground.randNum(this.numColors-1);
         this.ctx.fillStyle = this.colors.next();
         this.ctx.fillRect(0, 0, this.width, this.height);
 
-        var numRect = this.randNum(3, 0);
+        var numRect = this.randBackground.randNum(5, 0);
         for (var i=0; i<numRect; i++) {
             var x, y, w, h;
             var c = this.colors.next();
             
-            var mode = this.randNum(1, 0);
+            var mode = this.randBackground.randNum(1, 0);
             
             if (mode == 1) {
                 // horizontal stripe
-                y = this.randNum(Math.floor(this.height*.9), this.height*.1);
-                if (this.randNum(1, 0)) {
-                    h = this.randNum(Math.floor((this.height-y)*.9), this.height*.1);
+                y = this.randBackground.randNum(Math.floor(this.height*.9), this.height*.1);
+                if (this.randBackground.randNum(1, 0)) {
+                    h = this.randBackground.randNum(Math.floor((this.height-y)*.9), this.height*.1);
                 } else {
                     h = this.height;
                 }
@@ -180,9 +182,9 @@ Chromatico.prototype = {
                 
             } else {
                 // vertical stripe
-                x = this.randNum(Math.floor(this.width*.9), this.width*.1);
-                if (this.randNum(1, 0)) {
-                    w = this.randNum(Math.floor((this.width-x)*.9), this.width*.1);
+                x = this.randBackground.randNum(Math.floor(this.width*.9), this.width*.1);
+                if (this.randBackground.randNum(1, 0)) {
+                    w = this.randBackground.randNum(Math.floor((this.width-x)*.9), this.width*.1);
                 } else {
                     w = this.width;
                 }
@@ -196,18 +198,29 @@ Chromatico.prototype = {
     },
 
     drawText: function() {
-        var snips = this.randNum(8, 3);
+        var snips = this.randDrawing.randNum(6, 2);
         for (var i=0; i<snips; i++) {
             var text = this.snippets.getRandom(this.randDrawing);
             var color = this.colors.next();
             this.ctx.fillStyle = color;
-            var h = this.getTextHeight();
-            var x = this.getX();
-            var y = this.getY();
 
+            var h = this.getTextHeight();
             this.ctx.font = this.getFontString(h);
             this.ctx.textBaseline = 'top';
-            this.renderMultilineText(text, x, y, h);
+
+            var text_dim = this.measureMultilineText(text, h);
+            var x = Math.floor((this.width - text_dim.width) / 2);
+            var y = Math.floor((this.height - text_dim.height) / 2);
+
+            var wiggle_x = Math.floor((this.width + text_dim.width) * .75);
+            var rand_x = this.randDrawing.randNum(wiggle_x, 0);
+            var offset_x = rand_x - Math.floor(wiggle_x / 2);
+
+            var wiggle_y = Math.floor((this.height + text_dim.height) * .75);
+            var rand_y = this.randDrawing.randNum(wiggle_y, 0);
+            var offset_y = rand_y - Math.floor(wiggle_y / 2);
+
+            this.renderMultilineText(text, x+offset_x, y+offset_y, h);
         }
     },
 
@@ -221,6 +234,22 @@ Chromatico.prototype = {
         }
     },
 
+    measureMultilineText: function(text, h) {
+        var ret_w = 0;
+        var lines = text.split("\n");
+
+        for (var i in lines) {
+            var line = lines[i];
+            var metrics = this.ctx.measureText(line);
+            ret_w = Math.max(ret_w, metrics.width);
+        }
+
+        return {
+            width: ret_w,
+            height: h * lines.length
+        }
+    },
+
     getFontString: function(h) {
         var style = this.styles[Math.floor(this.randDrawing.next() * this.styles.length)];
         var font = this.fonts[Math.floor(this.randDrawing.next() * this.fonts.length)];
@@ -228,7 +257,7 @@ Chromatico.prototype = {
     },
 
     getX: function() {
-        return this.randNum(
+        return this.randDrawing.randNum(
             this.width - this.margin_x,
             0 - this.margin_x,
             2
@@ -236,7 +265,7 @@ Chromatico.prototype = {
     },
 
     getY: function() {
-        return this.randNum(
+        return this.randDrawing.randNum(
             this.height - this.margin_y,
             0 - this.margin_y,
             2
@@ -244,7 +273,7 @@ Chromatico.prototype = {
     },
 
     getW: function() {
-        return this.randNum(
+        return this.randDrawing.randNum(
             Math.floor(this.width*1.3), 
             Math.floor(this.width*.05)
         );
@@ -261,9 +290,7 @@ Chromatico.prototype = {
     getTextHeight: function() {
         var min = this.height*.05;
         var max = this.height*2;
-        return Math.floor(
-            Math.pow(this.randDrawing.next(), 2) * (max-min) + min
-        ); 
+        return this.randDrawing.randNum(min, max, .2);
     },
 
     setMargins: function() {
@@ -322,20 +349,6 @@ Chromatico.prototype = {
                 item.hide();
             }
         }
-    },
-
-    randNum: function(max, min, exp) {
-        if (min == undefined) min = 1;
-        var n = max-min;
-        var ret;
-
-        if (exp == undefined) {
-            ret = Math.round(this.randDrawing.next() * n + min);
-        } else {
-            ret = Math.round(Math.pow(this.randDrawing.next(), exp) * n + min);
-        }
-
-        return ret;
     },
 
 
@@ -648,8 +661,37 @@ RandomNumbers.prototype = {
         } else {
             return Math.random();
         }
-    }
+    },
 
+    randNum: function(max, min, exp) {
+        if (min == undefined) min = 1;
+        var n = max-min;
+        var ret;
+
+        if (exp == undefined) {
+            ret = Math.round(this.next() * n + min);
+        } else {
+            ret = Math.round(Math.pow(this.next(), exp) * n + min);
+        }
+
+        return ret;
+    },
+
+    randNumScaled: function(max, min, scale) {
+        if (min == undefined) min = 1;
+
+        if (scale > 0) {
+            min += Math.floor((max - min) * scale);
+        } else if (scale < 0) {
+            max -= Math.floor((max - min) * (-scale));
+        }
+
+        var n = max-min;
+        var ret;
+
+        ret = Math.round(this.next() * n + min);
+        return ret;
+    },
 };
 
 $('document').ready(function(){
