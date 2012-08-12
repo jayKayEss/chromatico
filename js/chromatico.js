@@ -347,7 +347,7 @@ Chromatico.prototype = {
                     list.append(item);
                 }
 
-                if (hsl[2] >= .5) {
+                if (this.colors.isLight(i)) {
                     item.removeClass('dark').addClass('light');
                 } else {
                     item.removeClass('light').addClass('dark');
@@ -553,6 +553,14 @@ Colors.prototype = {
             Math.floor(rgb[1] * 255),
             Math.floor(rgb[2] * 255)
         ];
+    },
+
+//    Cribbed from http://24ways.org/2010/calculating-color-contrast
+    isLight: function(i) {
+        var hsl = this.genRandColor(i);
+        var rgb = this.hslToRgb(hsl);
+        var yiq = ((rgb[0] * 299)+(rgb[1] * 587)+(rgb[2] * 114)) / 1000;
+        return (yiq >= 128) ? true : false;
     }
 }
 
