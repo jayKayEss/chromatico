@@ -862,7 +862,10 @@ $('document').ready(function(){
     chromatico.initializeColors();
     chromatico.populateColors();
     chromatico.shuffle();
-    chromatico.initialize(false);
+
+    window.setTimeout(function() {
+        chromatico.initialize(false);
+    }, 300);
 });
 
 
