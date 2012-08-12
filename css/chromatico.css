@@ -304,15 +304,15 @@ button#shuffleColors:active {
 }
 
 button#rotateColors {
-    background-position: -352px -32px;
+    background-position: -320px -32px;
 }
 
 button#rotateColors:hover {
-    background-position: -352px -64px;
+    background-position: -320px -64px;
 }
 
 button#rotateColors:active {
-    background-position: -351px -63px;
+    background-position: -319px -63px;
 }
 
 .dark button#newColor {
@@ -324,9 +324,9 @@ button#rotateColors:active {
 }
 
 .light button#newColor {
-    background-position: -320px -32px;
+    background-position: -288px -96px;
 }
 
 .light button#newColor:active {
-    background-position: -319px -31px;
+    background-position: -287px -95px;
 }
