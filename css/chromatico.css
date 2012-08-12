@@ -66,9 +66,7 @@ body {
 
 #theColors {
 	padding: 0px;
-	width: 120px;
     margin: 0px;
-    float: left;
 }
 
 #theColors li {
@@ -77,24 +75,27 @@ body {
 	font-weight: bold;
 	font-size: 12px;
 	text-align: right;
-	width: 100px;
     position: relative;
 }
 
-#theColors li span {
+#theColors li .hsl {
+    text-transform: lowercase;
+}
+
+#theColors li .rgb {
     text-transform: uppercase;
 }
 
 .light {
-    color: #ccc;
-}
-
-.dark {
     color: #000;
 }
 
+.dark {
+    color: #ccc;
+}
+
 #colorButtons {
-    float: right;
+    margin-top: 14px;
 }
 
 #colorSliders {
@@ -190,19 +191,16 @@ button#clearCustomSize:hover {
 #colorControls {
     display: none;
     position: absolute;
+    top: 6px;
+    left: 4px;
     height: 30px;
     padding: 2px;
     text-align: left;
 }
 
 #expS, #expV {
-/*    height: 10px;*/
     margin: 2px 0px 15px 0px;
 }
-
-/*#expS a, #expV a {*/
-/*    height: 16px;*/
-/*}*/
 
 #theButtons {
     margin: 14px 0px 0px 0px;
@@ -276,6 +274,10 @@ button#fewerColors:hover {
     background-position: -192px -64px;
 }
 
+button#fewerColors:active {
+    background-position: -191px -63px;
+}
+
 button#moreColors {
     background-position: -224px -32px;
 }
@@ -284,7 +286,46 @@ button#moreColors:hover {
     background-position: -224px -64px;
 }
 
-button#newColor {
+button#moreColors:active {
+    background-position: -223px -63px;
+}
+
+button#shuffleColors {
     background-position: -288px -32px;
 }
 
+button#shuffleColors:hover {
+    background-position: -288px -64px;
+}
+
+button#shuffleColors:active {
+    background-position: -287px -63px;
+}
+
+button#rotateColors {
+    background-position: -352px -32px;
+}
+
+button#rotateColors:hover {
+    background-position: -352px -64px;
+}
+
+button#rotateColors:active {
+    background-position: -351px -63px;
+}
+
+.dark button#newColor {
+    background-position: -288px -32px;
+}
+
+.dark button#newColor:active {
+    background-position: -287px -31px;
+}
+
+.light button#newColor {
+    background-position: -320px -32px;
+}
+
+.light button#newColor:active {
+    background-position: -319px -31px;
+}

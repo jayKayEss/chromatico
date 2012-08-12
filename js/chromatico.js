@@ -167,7 +167,7 @@ Chromatico.prototype = {
     },
 
     setBackground: function() {
-        this.colors.ptr = this.randBackground.randNum(this.numColors-1);
+        this.colors.ptr = 0;
         this.ctx.fillStyle = this.colors.next();
         this.ctx.fillRect(0, 0, this.width, this.height);
 
@@ -311,8 +311,8 @@ Chromatico.prototype = {
 
     populateColors: function() {
         var scale_s = $('#expS').slider('value');
-        var scale_v = $('#expV').slider('value');
-        this.colors = new Colors(this.numColors, scale_s, scale_v);
+        var scale_l = $('#expV').slider('value');
+        this.colors = new Colors(this.numColors, scale_s, scale_l);
         this.displayColors();
     },
 
@@ -337,25 +337,31 @@ Chromatico.prototype = {
             var item = items.eq(i);
 
             if (i < this.numColors) {
-                var c = this.colors.getHex(i);
-                var hsv = this.colors.getHsv(i);
+                var c = this.colors.getHslString(i);
+                var hsl = this.colors.getHsl(i);
+                var hex = this.colors.getHex(i);
 
                 if (item.size() == 0) {
                     item = $('<li><span></span></li>');
                     list.append(item);
                 }
 
-                var labelClass = 'light';
-                if (hsv[2] >= .5) {
-                    labelClass = 'dark';
+                if (hsl[2] >= .5) {
+                    item.removeClass('dark').addClass('light');
+                } else {
+                    item.removeClass('light').addClass('dark');
                 }
                 
-                item.find('span.color').html(c).attr('class', 'color '+labelClass);
+                item.find('span.color').html(
+                    '<div class="hsl">' + c + '</div>' +
+                    '<div class="rgb">' + hex + '</div>'
+                );
+
                 item.css('background-color', c);
                 item.attr('data-id', i);
-                item.show();
+                item.slideDown();
             } else {
-                item.hide();
+                item.slideUp();
             }
         }
     },
@@ -375,8 +381,6 @@ Chromatico.prototype = {
 
         elem.append(menu);
         menu.css({
-            left: '0px',
-            top: '0px',
             opacity: '1'
         }).stop().fadeIn();
     },
@@ -389,7 +393,7 @@ Chromatico.prototype = {
     }
 }
 
-function Colors(n, scale_s, scale_v) {
+function Colors(n, scale_s, scale_l) {
     this.rands = [];
     this.colors = [];
     this.ptr = 0;
@@ -400,10 +404,10 @@ function Colors(n, scale_s, scale_v) {
         this.scale_s = 1;
     }
     
-    if (scale_v != undefined) {
-        this.scale_v = scale_v;
+    if (scale_l != undefined) {
+        this.scale_l = scale_l;
     } else {
-        this.scale_v = 1;
+        this.scale_l = 1;
     }
 
     if (n == undefined) {
@@ -435,7 +439,7 @@ Colors.prototype = {
     more: function() {
         this.num++;
         var i = this.num-1;
-        if (this.colors[i] == undefined) {
+        if (this.rands[i] == undefined) {
             this.choose(i);
         }
     },
@@ -444,6 +448,11 @@ Colors.prototype = {
         if (this.num > 1) {
             this.num--;
         }
+    },
+
+    rotate: function() {
+        var tmp = this.rands.splice(this.num - 1, 1);
+        this.rands.unshift(tmp[0]);
     },
 
     reset: function() {
@@ -460,20 +469,20 @@ Colors.prototype = {
         var max_s = Math.min(1, 1+this.scale_s);
         var s = rand.next() * (max_s - min_s) + min_s;
 
-        var min_v = Math.max(0, 0+this.scale_v);
-        var max_v = Math.min(1, 1+this.scale_v);
-        var v = rand.next() * (max_v - min_v) + min_v;
+        var min_l = Math.max(0, 0+this.scale_l);
+        var max_l = Math.min(1, 1+this.scale_l);
+        var l = rand.next() * (max_l - min_l) + min_l;
 
         // default curve is too dark at lower end;
         // swing everything upward a bit:
-        v = Math.pow(v, .5);
+//        l = Math.pow(l, .5);
 
-        return [h, s, v];
+        return [h, s, l];
     },
 
     getHex: function(i) {
-        var hsv = this.genRandColor(i);
-        var rgb = this.hsvToRgb(hsv);
+        var hsl = this.genRandColor(i);
+        var rgb = this.hslToRgb(hsl);
         
         return '#' +
             this.toHex(rgb[0]) +
@@ -481,7 +490,16 @@ Colors.prototype = {
             this.toHex(rgb[2]);
     },
 
-    getHsv: function(i) {
+    getHslString: function(i) {
+        var hsl = this.genRandColor(i);
+
+        return 'hsl(' +
+            hsl[0] + ', ' +
+            Math.floor(hsl[1] * 100) + '%, ' +
+            Math.floor(hsl[2] * 100) + '%)';
+    },
+
+    getHsl: function(i) {
         return this.genRandColor(i);
     },
 
@@ -496,7 +514,7 @@ Colors.prototype = {
     },
 
     next: function() {
-        var ret = this.getHex(this.ptr);
+        var ret = this.getHslString(this.ptr);
         this.ptr++;
         if (this.ptr >= this.num) {
             this.ptr = 0;
@@ -504,45 +522,36 @@ Colors.prototype = {
         return ret;
     },
 
-    hsvToRgb: function(hsv) {
-        var h = hsv[0];
-        var s = hsv[1];
-        var v = hsv[2];
-        
-        var i, f, p, q, t, r, g, b;
+    hslToRgb: function(hsl) {
+        var h = hsl[0] / 360,
+            s = hsl[1],
+            l = hsl[2];
+        var v, min, sv, sextant, fract, vsf, rgb;
 
-        if( s == 0 ) {
-            r = g = b = Math.floor(v * 255);
-            return [r, g, b];
+        if (l <= 0.5) v = l * (1 + s);
+        else v = l + s - l * s;
+
+        if (v === 0) return [0, 0, 0];
+        else {
+            min = 2 * l - v;
+            sv = (v - min) / v;
+            h = 6 * h;
+            sextant = Math.floor(h);
+            fract = h - sextant;
+            vsf = v * sv * fract;
+            if (sextant === 0 || sextant === 6) rgb = [v, min + vsf, min];
+            else if (sextant === 1) rgb = [v - vsf, v, min];
+            else if (sextant === 2) rgb = [min, v, min + vsf];
+            else if (sextant === 3) rgb = [min, v - vsf, v];
+            else if (sextant === 4) rgb = [min + vsf, min, v];
+            else rgb = [v, min, v - vsf];
         }
 
-        h = h / 60;
-        i = Math.floor(h);
-        f = h - i;
-        
-        p = Math.floor(v * ( 1 - s ) * 255);
-        q = Math.floor(v * ( 1 - s * f ) * 255);
-        t = Math.floor(v * ( 1 - s * ( 1 - f ) ) * 255);
-        v = Math.floor(v * 255);
-
-        if (i == 0) {
-            return [v, t, p];
-
-        } else if (i == 1) {
-            return [q, v, p];
-
-        } else if (i == 2) {
-            return [p, v, t];
-
-        } else if (i == 3) {
-            return [p, q, v];
-
-        } else if (i == 4) {
-            return [t, p, v];
-
-        } else {
-            return [v, p, q];
-        }
+        return [
+            Math.floor(rgb[0] * 255),
+            Math.floor(rgb[1] * 255),
+            Math.floor(rgb[2] * 255)
+        ];
     }
 }
 
@@ -795,6 +804,18 @@ $('document').ready(function(){
         }
     });
 
+    $('#shuffleColors').click(function(event){
+        chromatico.colors.populate();
+        chromatico.displayColors();
+        chromatico.redraw();
+    });
+
+    $('#rotateColors').click(function(event){
+        chromatico.colors.rotate();
+        chromatico.displayColors();
+        chromatico.redraw();
+    });
+
     $('#newColor').click(function(event){
         var elem = $(event.currentTarget);
         var item = elem.parents('li');
@@ -828,7 +849,7 @@ $('document').ready(function(){
         value: 0,
         orientation: 'horizontal',
         change: function(event, ui) {
-            chromatico.colors.scale_v = ui.value;
+            chromatico.colors.scale_l = ui.value;
             chromatico.redraw();
             chromatico.displayColors();
         }
