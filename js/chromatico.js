@@ -70,6 +70,7 @@ Chromatico.prototype = {
                 left: Math.floor(this.elem.width()/2),
                 top: Math.floor(this.elem.height()/2)
             });
+            this.canvas.show();
 
             $('#sizeMenu').val(preset);
             this.changeSizePreset(preset);

@@ -46,6 +46,7 @@ body {
 #theCanvas {
     position: relative;
     box-shadow: 3px 3px 30px black;
+    display: none;
 }
 
 #theSidebar {
