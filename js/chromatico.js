@@ -32,13 +32,22 @@ function Chromatico(elem) {
     this.height = 1;
     this.lastWidth = 1;
     this.lastHeight = 1;
+    
+    this.gutterWidth = 30;
+    this.resizeScaler = 4;
 }
 
 Chromatico.prototype = {
 
     initialize: function(repeat) {
-        this.displayMaxX = this.elem.width();
-        this.displayMaxY = this.elem.height();
+        this.rightMargin = $('#theSidebar').outerWidth() + (this.gutterWidth * 2);
+
+        if (this.elem.width() > 1000) {
+            this.displayMaxX = this.elem.width() - this.rightMargin;
+        } else {
+            this.displayMaxX = this.elem.width() - (this.gutterWidth * 2);
+        }
+        this.displayMaxY = this.elem.height() - (this.gutterWidth * 2);
         
         var screenWidth = window.screen.width;
         var screenHeight = window.screen.height;
@@ -99,16 +108,16 @@ Chromatico.prototype = {
 
         if (displayWidth != currentDisplayWidth || displayHeight != currentDisplayHeight) {
             this.canvas.stop().animate({
-                top: marginY,
-                left: marginX,
+                top: marginY + this.gutterWidth,
+                left: marginX + this.gutterWidth,
                 height: displayHeight,
                 width: displayWidth,
            }, {
                 step: function(now, fx) {
                     if (fx.prop == 'width') {
-                        self.width = Math.round(now/2);
+                        self.width = Math.round(now / self.resizeScaler);
                     } else if (fx.prop == 'height') {
-                        self.height = Math.round(now/2);
+                        self.height = Math.round(now / self.resizeScaler);
                     }
 
                     if (fx.prop == 'left') {
