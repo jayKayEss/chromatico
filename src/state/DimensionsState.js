@@ -4,7 +4,7 @@ class DimensionsState {
         // Do some math to scale the canvas to the right size, while preserving aspect ratio.
         // As ugly as this is, it's preferable to me than the pure-CSS padding + pseudo-element hack.
         var controlsHeight = 100,
-            sidebarWidth = 250,
+            sidebarWidth = 300,
             screenWidth = window.screen.width,
             screenHeight = window.screen.height,
             pageWidth = window.innerWidth,

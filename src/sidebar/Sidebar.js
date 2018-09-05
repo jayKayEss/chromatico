@@ -35,6 +35,7 @@ class Sidebar extends Component {
             <div id="sidebar" className={classNames({ 'sidebar-active': this.props.sidebarActive })}>
                 <div className="header">
                     <IconButton icon="close" size="small" onClick={this.props.onToggleSidebar} title="Close menu"/>
+                    &nbsp;
                     <div className="svg-wrapper">
                         <svg className="svg-logo">
                             <use xlinkHref="#logo" />
@@ -53,7 +54,10 @@ class Sidebar extends Component {
                     onChangeSaturation={this.onChangeSaturation}
                     onChangeLuminance={this.onChangeLuminance}
                 />
-                <div className="buffer">&nbsp;</div>
+                <div className="credits">
+                    2018 <a href="http://www.jaykayess.com">Justin Kerr Sheckler</a>&nbsp;
+                    <a href="https://github.com/jayKayEss/Chromatico">&lt;src&gt;</a>
+                </div>
             </div>
         );
     }

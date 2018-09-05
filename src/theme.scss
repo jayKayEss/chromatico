@@ -15,12 +15,16 @@ body {
     background-repeat: repeat;
 }
 
+a {
+    text-decoration: none;
+    color: $lighter-gray;
+}
+
 button, input, label {
     border: none;
     background: transparent;
     color: $light-gray;
     margin: 0;
-    padding: 4px;
 
     &:hover:enabled, &:active:enabled {
         color: $lighter-gray;
@@ -50,6 +54,7 @@ button, input, label {
 
 button {
     border-radius: 100%;
+    padding: 4px;
 
     &.link {
         border-radius: 4px;

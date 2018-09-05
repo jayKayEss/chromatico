@@ -3,8 +3,10 @@
 #sidebar {
     .header {
         height: 40px;
+        min-height: 40px;
         display: flex;
         flex-direction: row;
+        align-items: center;
     }
 
     .svg-logo {
@@ -15,7 +17,6 @@
     .svg-wrapper {
         width: 100%;
         height: 40px;
-        align-self: center;
         display: flex;
         flex-direction: row;
         justify-content: right;
@@ -64,8 +65,12 @@
         }
     }
 
-    .buffer {
-        // works around an issue w/ mobile Safari & bottom nav bar
-        height: 100px;
+    .credits {
+        margin-top: auto;
+
+        @media screen and (max-width: $breakpoint) {
+            // workaround for mobile Safari's bottom tab bar
+            margin-bottom: 44px;
+        }
     }
 }
