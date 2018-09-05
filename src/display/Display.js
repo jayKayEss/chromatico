@@ -33,9 +33,7 @@ class Display extends Component {
         }));
 
         const displayMetrics = (this.props.sidebarActive && !this.props.dimensions.isMobile) ?
-                this.props.dimensions.displayWithSidebar : this.props.dimensions.display,
-            clickHandler = this.props.dimensions.isMobile && this.props.sidebarActive ?
-                this.props.onCloseSidebar : null;
+                this.props.dimensions.displayWithSidebar : this.props.dimensions.display;
 
         return (
             <div id="display">
