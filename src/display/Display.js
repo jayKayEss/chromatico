@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import { RoundRobin } from '../helpers';
 import { ColorState } from '../state';
 import BackgroundLayer from './BackgroundLayer.js';
@@ -39,7 +38,7 @@ class Display extends Component {
                 this.props.onCloseSidebar : null;
 
         return (
-            <div id="display" className={classNames({'sidebar-active': this.props.sidebarActive})}>
+            <div id="display">
                 <canvas
                     id="canvas" 
                     ref="canvas"

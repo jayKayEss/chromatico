@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import Display from './display';
 import Controls from './controls';
 import { Sidebar, MenuButton } from './sidebar';
@@ -40,21 +41,21 @@ class App extends Component {
     render() {
         return (
             <div id="app">
-                <div className="inner">
-                    <Sidebar
-                        sidebarActive={this.state.sidebar_active}
-                        onToggleSidebar={this.onToggleSidebar}
-                        colors={this.state.colors}
-                        scaleS={this.state.scale_s}
-                        scaleL={this.state.scale_l}
-                        onChangeColor={this.onChangeColor}
-                        onAddColor={this.onAddColor}
-                        onRemoveColor={this.onRemoveColor}
-                        onRefreshColors={this.onRefreshColors}
-                        onRotateColors={this.onRotateColors}
-                        onChangeSaturation={this.onChangeSaturation}
-                        onChangeLuminance={this.onChangeLuminance}
-                    />
+                <Sidebar
+                    sidebarActive={this.state.sidebar_active}
+                    onToggleSidebar={this.onToggleSidebar}
+                    colors={this.state.colors}
+                    scaleS={this.state.scale_s}
+                    scaleL={this.state.scale_l}
+                    onChangeColor={this.onChangeColor}
+                    onAddColor={this.onAddColor}
+                    onRemoveColor={this.onRemoveColor}
+                    onRefreshColors={this.onRefreshColors}
+                    onRotateColors={this.onRotateColors}
+                    onChangeSaturation={this.onChangeSaturation}
+                    onChangeLuminance={this.onChangeLuminance}
+                />
+                <div className={classNames('inner', {'sidebar-active': this.state.sidebar_active})}>
                     <Display
                         sidebarActive={this.state.sidebar_active}
                         onCloseSidebar={this.onCloseSidebar}
@@ -66,13 +67,13 @@ class App extends Component {
                         stripes={this.state.stripes}
                         text={this.state.text}
                     />
+                    <Controls
+                        sidebarActive={this.state.sidebar_active}
+                        onRandomizeAll={this.randomizeAll}
+                        onRandomizeLayers={this.randomizeLayers}
+                        onFileDownload={this.onFileDownload}
+                    />
                 </div>
-                <Controls
-                    sidebarActive={this.state.sidebar_active}
-                    onRandomizeAll={this.randomizeAll}
-                    onRandomizeLayers={this.randomizeLayers}
-                    onFileDownload={this.onFileDownload}
-                />
                 <MenuButton
                     sidebarActive={this.state.sidebar_active}
                     onToggleSidebar={this.onToggleSidebar}
