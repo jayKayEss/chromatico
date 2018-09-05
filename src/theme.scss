@@ -1,0 +1,81 @@
+@import './vars.scss';
+@import url(http://fonts.googleapis.com/css?family=Varela+Round);
+
+html,
+body,
+button {
+    font-family: Varela Round;
+    color: $light-gray;
+    font-size: 14px;
+}
+
+body {
+    background-color: $light-gray;
+    background-image: url('./img/bgtile.png');
+    background-repeat: repeat;
+}
+
+button, input, label {
+    border: none;
+    background: transparent;
+    color: $light-gray;
+    margin: 0;
+    padding: 4px;
+
+    &:hover:enabled, &:active:enabled {
+        color: $lighter-gray;
+    }
+    
+    &:focus {
+        background-color: $dark-gray;
+        outline-style: none;
+    }
+
+    &:disabled {
+        color: $dark-gray;
+    }
+
+    &.light {
+        color: $dark-gray;
+
+        &:hover:enabled, &:active:enabled {
+            color: $darker-gray;
+        }
+        
+        &:focus {
+            background-color: $light-gray;
+        }
+    }
+}
+
+button {
+    border-radius: 100%;
+
+    &.link {
+        border-radius: 4px;
+    }
+}
+
+svg {
+    fill: currentColor;
+}
+
+.button-small {
+    width: 40px;
+    height: 40px;
+
+    svg {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+.button-large {
+    width: 72px;
+    height: 72px;
+
+    svg {
+        width: 64px;
+        height: 64px;
+    }
+}

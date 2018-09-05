@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="random-all" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(17.000000, 15.000000)" fill="currentColor">
+            <polygon id="path3932-copy" fill-rule="nonzero" transform="translate(49.500000, 44.000000) rotate(90.000000) translate(-49.500000, -44.000000) " points="35.5 31.5 35.5 24.5 45.5 24.5 25.5 -5.5 5.5 24.5 15.5 24.5 15.5 44.5 73.5 74.5 73.5 93.5 83.5 89.5 93.5 93.5 93.5 61.5"></polygon>
+            <polygon id="path3932-copy-2" fill-rule="nonzero" transform="translate(71.500000, 78.000000) scale(1, -1) rotate(90.000000) translate(-71.500000, -78.000000) " points="81.5 96.5 81.5 80.5 91.5 80.5 71.5 50.5 51.5 80.5 61.5 80.5 61.5 105.5"></polygon>
+            <polygon id="Path" points="0 10 37 10 28 30 0 30 4 20"></polygon>
+        </g>
+    </g>
+</svg>

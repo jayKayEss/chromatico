@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="rotate" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="path3932" fill="currentColor" fill-rule="nonzero" points="74 88 40 88 40 49 50 49 30 19 10 49 20 49 20 108 74 108 69 99"></polygon>
+        <polygon id="path3932-copy" fill="currentColor" fill-rule="nonzero" transform="translate(86.000000, 64.500000) rotate(180.000000) translate(-86.000000, -64.500000) " points="118 89 84 89 84 50 94 50 74 20 54 50 64 50 64 109 118 109 113 100"></polygon>
+    </g>
+</svg>

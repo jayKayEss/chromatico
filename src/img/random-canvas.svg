@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="random-canvas" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M20,20 L108,20 L108,108 L20,108 L20,20 Z M23,23 L23,93 L105,93 L105,23 L23,23 Z" id="Combined-Shape" fill="currentColor"></path>
+        <g id="Group" transform="translate(38.000000, 30.000000)" fill="currentColor">
+            <polygon id="path3932-copy" fill-rule="nonzero" points="34 20 18 52 0 52 2 45 0 37 11 37 28 5 38 5 38 0 54 13 38 26 38 20"></polygon>
+            <polygon id="path3932-copy-2" fill-rule="nonzero" points="33 39 38 39 38 32 54 45 38 58 38 52 26 52"></polygon>
+            <polygon id="Path" points="1 5 20 5 12 21 1 21 3 13"></polygon>
+        </g>
+    </g>
+</svg>

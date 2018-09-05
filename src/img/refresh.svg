@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="refresh" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(5.000000, 15.000000)" fill="currentColor" fill-rule="nonzero">
+            <path d="M59,2.27373662e-14 C45.4690224,2.27373662e-14 33.2150681,5.4805569 24.3478125,14.3478125 L34.5030625,17.64 L38.205625,28.205625 C43.5259764,22.8852736 50.8814154,19.6 59,19.6 C75.2371692,19.6 88.4,32.7628308 88.4,49 C88.4,65.2371692 75.2371692,78.4 59,78.4 C42.7628308,78.4 29.6,65.2371692 29.6,49 L10,49 C10,76.0619503 31.9380399,98 59,98 C86.0619601,98 108,76.0619503 108,49 C108,21.9380497 86.0619601,2.27373662e-14 59,2.27373662e-14 Z" id="path8390" opacity="0.98999999"></path>
+            <polygon id="path8398" points="19.5 24 4.85752931e-14 53 39 53"></polygon>
+        </g>
+    </g>
+</svg>

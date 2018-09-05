@@ -1,0 +1,71 @@
+@import '../vars.scss';
+
+#sidebar {
+    .header {
+        height: 40px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .svg-logo {
+        width: 100%;
+        height: auto;
+    }
+
+    .svg-wrapper {
+        width: 100%;
+        height: 40px;
+        align-self: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: right;
+    }
+
+    .panel {
+        margin: 20px 0 20px 0;
+        padding: 0;
+    }
+    
+    ul.color-list {
+        list-style-type: none;
+
+        li {
+            margin: 0;
+            padding: 10px;
+            text-align: right;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            &.light {
+                color: $dark-gray;
+            }
+        }
+    }
+    
+    .buttons {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .sliders {
+        .item {
+            margin-top: 20px;
+        }
+
+        label {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        input {
+            width: 100%;
+        }
+    }
+
+    .buffer {
+        // works around an issue w/ mobile Safari & bottom nav bar
+        height: 100px;
+    }
+}
