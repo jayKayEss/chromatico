@@ -4,6 +4,7 @@ import { ColorState } from '../state';
 import BackgroundLayer from './BackgroundLayer.js';
 import StripeLayer from './StripeLayer.js';
 import TextLayer from './TextLayer.js';
+import LogoLayer from './LogoLayer';
 
 class Display extends Component {
 
@@ -77,6 +78,11 @@ class Display extends Component {
                         />
                     )
                 })}
+                <LogoLayer
+                    canvasWidth={this.props.dimensions.canvasWidth}
+                    canvasHeight={this.props.dimensions.canvasHeight}
+                    renderCtx={this.renderCtx}
+                />
             </div>
         );
     }
