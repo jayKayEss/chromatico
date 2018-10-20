@@ -11,14 +11,14 @@
   },
   "scripts": {
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js",
+    "start": "npm_execpath=yarn npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",
-    "build": "npm-run-all build-css build-js",
+    "build": "npm_execpath=yarn npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "deploy": "npm run build && scp -r build/* jaykayess:~/www/chromatico/"
+    "watch-css": "yarn run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "deploy": "yarn run build && scp -r build/* jaykayess:~/www/chromatico/"
   },
   "devDependencies": {
     "node-sass-chokidar": "^1.3.3",
