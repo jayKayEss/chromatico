@@ -2,7 +2,7 @@
   "name": "chromatico",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jaykayess.github.io/chromatico",
+  "homepage": "http://chromati.co",
   "dependencies": {
     "classnames": "^2.2.6",
     "file-saver": "^1.3.8",
